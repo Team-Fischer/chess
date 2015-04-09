@@ -36,6 +36,11 @@ GEM
     coffee-script-source (1.9.1)
     erubis (2.7.0)
     execjs (2.5.2)
+    factory_girl (4.5.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.5.0)
+      factory_girl (~> 4.5.0)
+      railties (>= 3.0.0)
     hike (1.2.3)
     i18n (0.7.0)
     jbuilder (1.5.3)
@@ -53,6 +58,8 @@ GEM
     multi_json (1.11.0)
     pg (0.18.1)
     polyglot (0.3.5)
+    quiet_assets (1.1.0)
+      railties (>= 3.1, < 5.0)
     rack (1.5.2)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -108,9 +115,11 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
+  factory_girl_rails (~> 4.0)
   jbuilder (~> 1.2)
   jquery-rails
   pg
+  quiet_assets
   rails (= 4.0.1)
   sass-rails (~> 4.0.0)
   sdoc
