@@ -3,7 +3,7 @@ Chess
 
 A group project by students of theFirehoseProject. The application is a web based chess game written in ruby using the rails framework.
 
-The application is running [here][https://fischer-chess.herokuapp.com].
+The application is running [here](https://fischer-chess.herokuapp.com).
 
 Some basic info:
 ----------------
@@ -13,4 +13,4 @@ Some basic info:
 * Hosting is on heroku
 
 
-Wireframes can be seen [here][https://github.com/Team-Fischer/chess/wiki/wireframes]
+Wireframes can be seen [here](https://github.com/Team-Fischer/chess/wiki/wireframes)
