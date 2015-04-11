@@ -6,6 +6,7 @@ addons:
   postgresql: "9.3"
 before_script:
   - psql -c 'create database chess_test;' -U postgres
+  - rake db:migrate RAILS_ENV=test
 deploy:
   provider: heroku
   api_key:
