@@ -1,3 +1,10 @@
 language: ruby
 rvm:
-  - 2.0.0
+- 2.0.0
+deploy:
+  provider: heroku
+  api_key:
+    secure: nP9gurU92Ir8iut2cEYgeRizFw0wGWEEJ8Yy05Yfp5UTGp9b9MRM7gOuejBx3p8bF3BquxDWbjUEXoYfWU+cWZ1yAfYmr7sqUAFwmHwjrPyBlFCxwXQNefyhINdIAGiYwhZXCvcI05oMha3PQePZXwO4A3NphjoMLt+LyS4dnNM=
+  app: chess
+  on:
+    repo: Team-Fischer/chess
