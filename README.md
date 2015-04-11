@@ -7,7 +7,7 @@ The application is running [here](https://fischer-chess.herokuapp.com).
 
 Some basic info:
 ----------------
-* Ruby version 2.0.0-p253
+* Ruby version 2.0.0-p353
 * Rails 4.0.1
 * Database is Postgresql
 * Hosting is on heroku
