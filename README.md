@@ -16,4 +16,6 @@ Some basic info:
 Wireframes can be seen [here](https://github.com/Team-Fischer/chess/wiki/wireframes)
 
 
-Travis-CI logs can be viewed [here](https://travis-ci.org/Team-Fischer/chess)
+Travis-CI page can be viewed [here](https://travis-ci.org/Team-Fischer/chess)
+
+and the Travis-CI build logs can be viewed [here](https://travis-ci.org/Team-Fischer/chess/builds/).
