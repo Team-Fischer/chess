@@ -7,6 +7,9 @@ gem 'rails', '4.0.1'
 # Use postgresql as the database for Active Record
 gem 'pg'
 
+# simpleform for cleaner forms
+gem 'simple_form'
+
 # factory girl to replace fixtures
 gem 'factory_girl_rails', '~> 4.0'
 
