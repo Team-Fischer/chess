@@ -47,6 +47,10 @@ group :development do
   gem 'quiet_assets'
 end
 
+group :test do
+  gem 'simplecov', :require => false
+end
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
