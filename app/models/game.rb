@@ -1,6 +1,8 @@
 class Game < ActiveRecord::Base
-	has_many :users
-	has_many :pieces
+
+has_many :users
+has_many :pieces
+delegate :kings, :queens, :bishops, :knights, :rooks, :pawns, to: :pieces
 	
 	def initialize
 		# Black pieces
@@ -12,7 +14,6 @@ class Game < ActiveRecord::Base
 		Knight.create(color: black, x_coord: 5, y_coord: 0)
 		Bishop.create(color: black, x_coord: 6, y_coord: 0)
 		Rook.create(color: black, x_coord: 7, y_coord: 0)
-
 		Pawn.create(color: black, x_coord: 0, y_coord: 1)
 		Pawn.create(color: black, x_coord: 1, y_coord: 1)	
 		Pawn.create(color: black, x_coord: 2, y_coord: 1)
@@ -21,8 +22,6 @@ class Game < ActiveRecord::Base
 		Pawn.create(color: black, x_coord: 5, y_coord: 1)
 		Pawn.create(color: black, x_coord: 6, y_coord: 1)
 		Pawn.create(color: black, x_coord: 7, y_coord: 1)
-
-		
 		# White pieces
 		Rook.create(color: black, x_coord: 0, y_coord: 7)
 		Knight.create(color: black, x_coord: 1, y_coord: 7)	
@@ -32,7 +31,6 @@ class Game < ActiveRecord::Base
 		Knight.create(color: black, x_coord: 5, y_coord: 7)
 		Bishop.create(color: black, x_coord: 6, y_coord: 7)
 		Rook.create(color: black, x_coord: 7, y_coord: 7)
-
 		Pawn.create(color: black, x_coord: 0, y_coord: 6)
 		Pawn.create(color: black, x_coord: 1, y_coord: 6)	
 		Pawn.create(color: black, x_coord: 2, y_coord: 6)
@@ -42,5 +40,4 @@ class Game < ActiveRecord::Base
 		Pawn.create(color: black, x_coord: 6, y_coord: 6)
 		Pawn.create(color: black, x_coord: 7, y_coord: 6)
 	end
-
 end
