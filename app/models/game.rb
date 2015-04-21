@@ -3,7 +3,7 @@ class Game < ActiveRecord::Base
   has_many :pieces
   delegate :kings, :queens, :bishops, :knights, :rooks, :pawns, to: :pieces
 	
-	def initialize
+	def populate_board
 		# Black pieces
 		Rook.create(color: "black", x_coord: 0, y_coord: 0)
 		Knight.create(color: "black", x_coord: 1, y_coord: 0)	
