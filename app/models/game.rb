@@ -24,7 +24,7 @@ class Game < ActiveRecord::Base
 
 		
 		# White pieces
-		Rook.create(color: git brablack, x_coord: 0, y_coord: 7)
+		Rook.create(color: black, x_coord: 0, y_coord: 7)
 		Knight.create(color: black, x_coord: 1, y_coord: 7)	
 		Bishop.create(color: black, x_coord: 2, y_coord: 7)
 		Queen.create(color: black, x_coord: 3, y_coord: 7)
