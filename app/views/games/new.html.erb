@@ -1,4 +1,8 @@
 <h1 class="text-center">Start a new Game</h1>
 
-<a class="btn btn-primary" href="/games/show">Play</a>
+  <%= simple_form_for @game, :url => games_path do |f| %>
+    <%= f.submit "Play", :class => 'btn btn-primary' %>
+  <% end %>
+  <br />
+
 		
