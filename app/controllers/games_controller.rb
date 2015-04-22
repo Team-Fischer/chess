@@ -1,6 +1,7 @@
 class GamesController < ApplicationController
+
 	def new
-		
+		@game = Game.new
 	end
 
 	def show
@@ -8,5 +9,9 @@ class GamesController < ApplicationController
 	end
 
 	def create
-	end		
+		@game = Game.create
+		redirect_to game_path(@game)
+	end	
+
+
 end
