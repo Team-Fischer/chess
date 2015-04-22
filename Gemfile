@@ -36,7 +36,6 @@ gem 'jbuilder', '~> 1.2'
 gem 'devise', '>= 3.2.4'
 gem 'bootstrap-sass', '~> 3.3.0'
 gem 'autoprefixer-rails'
-gem 'rubocop', require: false
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -46,6 +45,7 @@ end
 # Quiet assets to clean up development log so you can see what's going on
 group :development do
   gem 'quiet_assets'
+  gem 'rubocop', require: false
 end
 
 group :test do
