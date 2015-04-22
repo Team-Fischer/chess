@@ -45,6 +45,7 @@ end
 # Quiet assets to clean up development log so you can see what's going on
 group :development do
   gem 'quiet_assets'
+  gem 'rubocop', require: false
 end
 
 group :test do
