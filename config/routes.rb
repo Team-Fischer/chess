@@ -1,6 +1,6 @@
 Chess::Application.routes.draw do
 
-  devise_for :users
+  devise_for :users, :controllers => { :omniauth_callbacks => "callbacks" }
   root "static_pages#index"
   resources :games, :only => [:new, :create, :show] do
     resources :pieces, :only => [:create, :delete, :update]
