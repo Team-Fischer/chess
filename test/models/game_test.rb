@@ -9,4 +9,6 @@ class GameTest < ActiveSupport::TestCase
     assert_equal game.pieces.where(:color => 'black').count, 16, 'populate_board should create 16 black pieces'
     assert_equal game.pieces.where(:color => 'white').count, 16, 'populate_board should create 16 white pieces'
   end
+  
+  
 end
