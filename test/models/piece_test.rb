@@ -69,4 +69,22 @@ class PieceTest < ActiveSupport::TestCase
     assert oops.invalid?
 
   end
+  
+  test "king move is valid" do
+    game = create(:game)
+    king = create(:king, :game_id => game.id)
+    
+    assert_equal king.valid_move?(2, 1), true, "King should be able to move 1 space on X axis" 
+    assert_equal king.valid_move?(1, 2), true, "King should be able to move 1 space on Y axis" 
+    assert_equal king.valid_move?(2, 2), true, "King should be able to move 1 space on X and Y axis"
+  end
+  
+  test "king move is not valid" do
+    game = create(:game)
+    king = create(:king, :game_id => game.id)
+    
+    assert_equal king.valid_move?(3, 1), false, "King should not be able to move 2 spaces on X axis" 
+    assert_equal king.valid_move?(1, 3), false, "King should not be able to move 2 spaces on Y axis" 
+    assert_equal king.valid_move?(3, 3), false, "King should not be able to move 2 spaces on X and Y axis"
+  end
 end
