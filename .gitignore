@@ -21,3 +21,6 @@
 
 # Ignore simplecov coverage directory
 coverage
+
+/config/local_env.yml
+
