@@ -1,12 +1,9 @@
 <h1 class="text-center">Have Fun</h1>
 
 <table class='chess-board chess-squares'>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+  <% @rows.times do |row| %>
+    <tr>
+      <% @columns.times do |column| %><td id="<%= (row + 1) * (column + 1) %>"></td><% end %>
+    </tr>
+  <% end %>
 </table>
