@@ -15,5 +15,9 @@ class Piece < ActiveRecord::Base
       errors.add(:type, "must be one of King, Queen, Bishop, Knight, Rook, Pawn")
     end
   end
-
+  
+  def on_board?(x, y)
+    (0..7).include?(x) && (0..7).include?(y)
+  end
+  
 end
