@@ -11,8 +11,8 @@ class Game < ActiveRecord::Base
 				y_pawns = 1
 				y_others = 0
 			else
-				y_pawns = 7
-				y_others = 6
+				y_pawns = 6
+				y_others = 7
 			end
 			rooks.create(color: color, x_coord: 0, y_coord: y_others)
 			knights.create(color: color, x_coord: 1, y_coord: y_others)	
