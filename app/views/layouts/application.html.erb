@@ -7,6 +7,14 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <div id="headerbg">
+    <h2>Team Fischer</h2>
+    <% if user_signed_in? %>
+      <p><%= current_user.email %></p>
+    <% end %>
+  </div>
+
+
 <script>
 +  window.fbAsyncInit = function() {
 +    FB.init({
@@ -32,12 +40,19 @@
 <% end %>
 <%= yield %>
 
+
+
 </body>
-<footer class = "text-center">
-<% if user_signed_in? %>
-  <li><%= link_to 'Sign out', destroy_user_session_path, :method => :delete %></li>
-<% else %>
-  <li><%= link_to 'Sign in', new_user_session_path %></li>
-<% end %>
-</footer>
+<br />
+<br />
+<div class="clear">
+  <footer class = "text-center">
+    <% if user_signed_in? %>
+      <li><%= link_to 'Sign out', destroy_user_session_path, :method => :delete %></li>
+    <% else %>
+      <li><%= link_to 'Sign in', new_user_session_path %></li>
+    <% end %>
+  </footer>
+</div>
+
 </html>

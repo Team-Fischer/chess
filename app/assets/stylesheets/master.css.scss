@@ -18,3 +18,17 @@ tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
   background: white;
 }
 
+body{
+	margin: 0px;
+	background:#FFF;
+}
+
+#headerbg{
+	background:#cccc66;
+	text-align:center;
+	padding:20px;
+}
+
+.clear {
+	clear:both;
+}
