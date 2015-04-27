@@ -48,7 +48,7 @@ class PieceTest < ActiveSupport::TestCase
     assert rook.is_a?(Rook)
 
     rook2 = Rook.find_by_game_id(game.id)
-    assert rook.valid?
+    assert rook2.valid?
 
   end
 
@@ -58,7 +58,7 @@ class PieceTest < ActiveSupport::TestCase
     assert pawn.is_a?(Pawn)
 
     pawn2 = Pawn.find_by_game_id(game.id)
-    assert pawn.valid?
+    assert pawn2.valid?
 
   end
 
@@ -87,4 +87,19 @@ class PieceTest < ActiveSupport::TestCase
     assert_equal king.valid_move?(1, 3), false, "King should not be able to move 2 spaces on Y axis" 
     assert_equal king.valid_move?(3, 3), false, "King should not be able to move 2 spaces on X and Y axis"
   end
+  
+  test "move is on board" do
+    game = create(:game)
+    king = create(:king, :game_id => game.id)
+    
+    assert_equal king.on_board?(7, 7), true, "king should be on board"
+  end
+  
+  test "move is not on board" do
+    game = create(:game)
+    king = create(:king, :game_id => game.id)
+  
+    assert_equal king.on_board?(8, 8), false, "king should not be on board"
+  end
+    
 end
