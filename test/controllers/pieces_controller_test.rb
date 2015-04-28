@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class PiecesControllerTest < ActionController::TestCase
-  # TODO: these tests should work to test pieces controller once games 
+  # TODO: these tests should work to test pieces controller once games
   # controller is fully setup
 
   # test "should create" do
