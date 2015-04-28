@@ -117,4 +117,11 @@ class PieceTest < ActiveSupport::TestCase
     assert_equal true, pawn.is_obstructed?(0,6)
     assert_equal false, pawn.is_obstructed?(0,2)
   end
+  
+  test "check knight obstruction" do
+    game = create(:game)
+    knight = game.pieces.knights.where(:x_coord => 5, :y_coord => 7).first
+
+    assert_equal false, knight.is_obstructed?(0,2)
+  end
 end
