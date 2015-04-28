@@ -51,7 +51,7 @@ group :development do
 end
 
 group :test do
-  gem 'simplecov', :require => false
+  gem 'simplecov', require: false
 end
 
 # Use ActiveModel has_secure_password
