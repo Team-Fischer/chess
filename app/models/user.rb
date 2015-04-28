@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:facebook]
 
+  scope :online, where('updated_at >= ?', 10.minutes.ago)
+
   def self.from_omniauth(auth)
   	where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
   		user.provider = auth.provider
@@ -16,10 +18,6 @@ class User < ActiveRecord::Base
   		user.email = auth.info.email
   		user.password = Devise.friendly_token[0, 20]
   	end
-  end
-
-  def online?
-    updated_at > 10.minutes.ago
   end
 
 end
