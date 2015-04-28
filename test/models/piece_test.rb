@@ -102,17 +102,19 @@ class PieceTest < ActiveSupport::TestCase
     assert_equal king.on_board?(8, 8), false, "king should not be on board"
   end
   
-  test "is obstructed" do
+  test "check king obstruction" do
     game = create(:game)
     king = game.pieces.kings.where(:color => 'black').first
   
     assert_equal true, king.is_obstructed?(4,1)
+    assert_equal false, king.is_obstructed?(4,4)
   end
   
-    test "is not obstructed" do
+  test "check pawn obstruction" do
     game = create(:game)
-    king = game.pieces.kings.where(:color => 'black').first
-  
-    assert_equal false, king.is_obstructed?(4,4)
+    pawn = game.pieces.pawns.where(:x_coord => 0, :y_coord => 1).first
+
+    assert_equal true, pawn.is_obstructed?(0,6)
+    assert_equal false, pawn.is_obstructed?(0,2)
   end
 end
