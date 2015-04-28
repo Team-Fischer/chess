@@ -13,7 +13,15 @@ class King < Piece
       return true
     else
       return false
-    end      
+    end
+  end
+  
+  def is_obstructed?(x_dest, y_dest)
+    if Piece.where(:x_coord => x_dest, :y_coord => y_dest).length > 0
+      return true
+    else
+      return false
+    end
   end
 
 end

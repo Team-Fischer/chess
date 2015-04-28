@@ -101,5 +101,18 @@ class PieceTest < ActiveSupport::TestCase
   
     assert_equal king.on_board?(8, 8), false, "king should not be on board"
   end
-    
+  
+  test "is obstructed" do
+    game = create(:game)
+    king = game.pieces.kings.where(:color => 'black').first
+  
+    assert_equal true, king.is_obstructed?(4,1)
+  end
+  
+    test "is not obstructed" do
+    game = create(:game)
+    king = game.pieces.kings.where(:color => 'black').first
+  
+    assert_equal false, king.is_obstructed?(4,4)
+  end
 end
