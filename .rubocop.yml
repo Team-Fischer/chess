@@ -1,2 +1,5 @@
 Documentation:
   Enabled: false
+
+Style/HashSyntax:
+  Enabled: true

@@ -1,8 +1,8 @@
 Chess::Application.routes.draw do
-  devise_for :users, controllers: { omniauth_callbacks: 'callbacks' }
+  devise_for :users, controllers: { :omniauth_callbacks => 'callbacks' }
   root 'static_pages#index'
-  resources :games, only: [:new, :create, :show] do
-    resources :pieces, only: [:create, :delete, :update]
+  resources :games, :only => [:new, :create, :show] do
+    resources :pieces, :only => [:create, :delete, :update]
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with 'rake routes'.
