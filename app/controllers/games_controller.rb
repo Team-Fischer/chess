@@ -1,5 +1,4 @@
 class GamesController < ApplicationController
-
   def new
     @game = Game.new
   end
@@ -13,6 +12,4 @@ class GamesController < ApplicationController
     @game = Game.create
     redirect_to game_path(@game)
   end
-
-
 end
