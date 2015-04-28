@@ -11,8 +11,8 @@ class Piece < ActiveRecord::Base
   scope :pawns, -> { where(:type => 'Pawn') }
 
   def valid_piece_names
-    return unless %w(King Queen Bishop Knight Rook Pawn).include?(type)
-    errors.add(:type, 'must be one of King, Queen, Bishop, Knight, Rook, Pawn')
+    return if %w(King Queen Bishop Knight Rook Pawn).include?(type)
+    errors.add(:type, "must be one of King, Queen, Bishop, Knight, Rook, Pawn")
   end
   
   def on_board?(x, y)
