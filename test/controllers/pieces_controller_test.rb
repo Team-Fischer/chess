@@ -1,8 +1,8 @@
 require 'test_helper'
 
 class PiecesControllerTest < ActionController::TestCase
-
-  # TODO: these tests should work to test pieces controller once games controller is fully setup
+  # TODO: these tests should work to test pieces controller once games
+  # controller is fully setup
 
   # test "should create" do
   #   game = create(:game)
@@ -31,5 +31,4 @@ class PiecesControllerTest < ActionController::TestCase
   #   put :update, :id => king.id, :king => { :x_coord => 2 }
   #   assert_response :success
   # end
-
 end
