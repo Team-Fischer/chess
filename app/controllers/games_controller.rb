@@ -4,8 +4,7 @@ class GamesController < ApplicationController
   end
 
   def show
-    @rows = 8
-    @columns = 8
+    @game = Game.where(:id => params[:id]).first
   end
 
   def create

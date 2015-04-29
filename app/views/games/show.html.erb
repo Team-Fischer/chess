@@ -1,9 +1,24 @@
 <h1 class="text-center">Have Fun</h1>
 
+<!-- drawing chess board -->
 <table class='chess-board chess-squares'>
-  <% @rows.times do |row| %>
+  <% 8.times do |row| %>
     <tr>
-      <% @columns.times do |column| %><td id="<%= (row + 1) * (column + 1) %>"></td><% end %>
+      <% 8.times do |column| %><td id="<%= (row * 8) + (column + 1) %>"></td><% end %>
     </tr>
   <% end %>
 </table>
+
+<% @game.pieces.each do |piece| %>
+  <script>
+    if("<%= piece.type %>" == "Rook") {
+      var type = "tower";
+    } else {
+      var type = "<%= piece.type %>".toLowerCase();
+    }
+    var color = " " + "<%= piece.color %>";
+    var square = (parseInt("<%= piece.x_coord %>") * 8) + (parseInt("<%= piece.y_coord %>") + 1);
+    $("#" + square.toString()).html("<span class='glyphicon glyphicon-" + type
+                                    + color + " piece' aria-hidden='true'></span>");
+  </script>
+<% end %>
