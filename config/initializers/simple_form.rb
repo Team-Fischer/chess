@@ -1,6 +1,6 @@
 # Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|
-  config.input_class = "form-control"
+  config.input_class = 'form-control'
   # Wrappers are used by the form builder to generate a
   # complete input. You can remove any component from the
   # wrapper, change the order or even add your own to the
@@ -19,7 +19,7 @@ SimpleForm.setup do |config|
     b.use :html5
 
     # Calculates placeholders automatically from I18n
-    # You can also pass a string as f.input placeholder: "Placeholder"
+    # You can also pass a string as f.input placeholder: 'Placeholder'
     b.use :placeholder
 
     ## Optional extensions
@@ -99,7 +99,7 @@ SimpleForm.setup do |config|
   # config.item_wrapper_class = nil
 
   # How the label text should be generated altogether with the required text.
-  # config.label_text = lambda { |label, required, explicit_label| "#{required} #{label}" }
+  # config.label_text = lambda { |label, required, explicit_label| '#{required} #{label}' }
 
   # You can define the class to use on all labels. Default is nil.
   # config.label_class = nil
@@ -135,7 +135,7 @@ SimpleForm.setup do |config|
 
   # Namespaces where SimpleForm should look for custom input classes that
   # override default inputs.
-  # config.custom_inputs_namespaces << "CustomInputs"
+  # config.custom_inputs_namespaces << 'CustomInputs'
 
   # Default priority for time_zone inputs.
   # config.time_zone_priority = nil

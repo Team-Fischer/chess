@@ -12,7 +12,7 @@ class Piece < ActiveRecord::Base
 
   def valid_piece_names
     return if %w(King Queen Bishop Knight Rook Pawn).include?(type)
-    errors.add(:type, "must be one of King, Queen, Bishop, Knight, Rook, Pawn")
+    errors.add(:type, 'must be one of King, Queen, Bishop, Knight, Rook, Pawn')
   end
 
   def as_json(options = {})
