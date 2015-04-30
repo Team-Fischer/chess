@@ -6,9 +6,9 @@
     <tr>
       <% 8.times do |column| %>
         <td id="<%= (row * 8) + (column + 1) %>">
-          <% if @pieces[row][column] %>
-            <span class="glyphicon glyphicon-<%= @pieces[row][column].glyph %>
-                        <%= @pieces[row][column][:color] %>
+          <% if @game.piece_at(row, column) %>
+            <span class="glyphicon glyphicon-<%= @game.piece_at(row, column).glyph %>
+                        <%= @game.piece_at(row, column).color %>
                         piece" aria-hidden="true">
             </span>
           <% end %>

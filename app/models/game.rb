@@ -27,4 +27,17 @@ class Game < ActiveRecord::Base
       end
     end
   end
+
+  def board_state
+    return @board if @board.present?
+    @board = Array.new(8) { Array.new(8) }
+    pieces.each do |piece|
+      @board[piece.x_coord][piece.y_coord] = piece
+    end
+    @board
+  end
+
+  def piece_at(x, y)
+    board_state[x][y]
+  end
 end
