@@ -14,7 +14,15 @@ class Piece < ActiveRecord::Base
     return if %w(King Queen Bishop Knight Rook Pawn).include?(type)
     errors.add(:type, "must be one of King, Queen, Bishop, Knight, Rook, Pawn")
   end
-  
+
+  def as_json(options = {})
+    super(options).merge(:type => self.type, :glyph => glyph)
+  end
+
+  def glyph
+    self.type.downcase
+  end
+
   def on_board?(x, y)
     (0..7).include?(x) && (0..7).include?(y)
   end

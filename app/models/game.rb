@@ -2,7 +2,7 @@ class Game < ActiveRecord::Base
   after_create :populate_board
 
   has_many :users
-  has_many :pieces
+  has_many :pieces, :dependent => :destroy
   delegate :kings, :queens, :bishops, :knights, :rooks, :pawns, to: :pieces
 
   def populate_board

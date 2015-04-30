@@ -9,16 +9,15 @@
   <% end %>
 </table>
 
-<% @game.pieces.each do |piece| %>
-  <script>
-    if("<%= piece.type %>" == "Rook") {
-      var type = "tower";
-    } else {
-      var type = "<%= piece.type %>".toLowerCase();
+<script>
+  $(document).ready(function(){
+    var pieces = <%= @game.pieces.to_json.html_safe %>;
+    for (var piece in pieces){
+      var type = pieces[piece].glyph;
+      var color = ' ' + pieces[piece].color;
+      var square = (pieces[piece].x_coord * 8) + (pieces[piece].y_coord + 1);
+      $("#" + square.toString()).html("<span class='glyphicon glyphicon-" + type
+                                      + color + " piece' aria-hidden='true'></span>");
     }
-    var color = " " + "<%= piece.color %>";
-    var square = (parseInt("<%= piece.x_coord %>") * 8) + (parseInt("<%= piece.y_coord %>") + 1);
-    $("#" + square.toString()).html("<span class='glyphicon glyphicon-" + type
-                                    + color + " piece' aria-hidden='true'></span>");
-  </script>
-<% end %>
+  });
+</script>
