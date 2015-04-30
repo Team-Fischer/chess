@@ -131,4 +131,18 @@ class PieceTest < ActiveSupport::TestCase
     assert_equal true, rook.is_obstructed?(0, 1)
     assert_equal true, rook.is_obstructed?(0, 4)
   end
+  
+    test "check bishop obstruction" do
+    game = create(:game)
+    bishop = game.pieces.bishops.where(:x_coord => 2, :y_coord => 7).first
+    assert_equal true, bishop.is_obstructed?(3, 1)
+    assert_equal true, bishop.is_obstructed?(6,3)
+  end
+  
+  test "check queen obstruction" do
+    game = create(:game)
+    queen = game.pieces.queens.where(:color => 'black').first
+  
+    assert_equal true, queen.is_obstructed?(4,1)
+  end
 end

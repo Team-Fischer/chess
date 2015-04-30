@@ -13,7 +13,7 @@ class King < Piece
       return true
     else
       return false
-    end
+    end      
   end
   
   def is_obstructed?(x_dest, y_dest)

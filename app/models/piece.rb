@@ -20,4 +20,6 @@ class Piece < ActiveRecord::Base
     (0..7).include?(x) && (0..7).include?(y)
   end
   
+
+  
 end
