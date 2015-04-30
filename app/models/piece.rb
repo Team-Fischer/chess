@@ -15,10 +15,6 @@ class Piece < ActiveRecord::Base
     errors.add(:type, 'must be one of King, Queen, Bishop, Knight, Rook, Pawn')
   end
 
-  def as_json(options = {})
-    super(options).merge(:type => self.type, :glyph => glyph)
-  end
-
   def glyph
     self.type.downcase
   end

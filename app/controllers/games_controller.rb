@@ -5,8 +5,10 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.where(:id => params[:id]).first
-    # @pieces = []
-    # @game.pieces.each { |piece| @pieces << piece.attributes }
+    @pieces = Array.new(8) { Array.new(8) }
+    @game.pieces.each do |piece|
+      @pieces[piece.x_coord][piece.y_coord] = piece
+    end
   end
 
   def create

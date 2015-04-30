@@ -4,20 +4,17 @@
 <table class='chess-board chess-squares'>
   <% 8.times do |row| %>
     <tr>
-      <% 8.times do |column| %><td id="<%= (row * 8) + (column + 1) %>"></td><% end %>
+      <% 8.times do |column| %>
+        <td id="<%= (row * 8) + (column + 1) %>">
+          <% if @pieces[row][column] %>
+            <span class="glyphicon glyphicon-<%= @pieces[row][column].glyph %>
+                        <%= @pieces[row][column][:color] %>
+                        piece" aria-hidden="true">
+            </span>
+          <% end %>
+        </td>
+      <% end %>
     </tr>
   <% end %>
 </table>
 
-<script>
-  $(document).ready(function(){
-    var pieces = <%= @game.pieces.to_json.html_safe %>;
-    for (var piece in pieces){
-      var type = pieces[piece].glyph;
-      var color = ' ' + pieces[piece].color;
-      var square = (pieces[piece].x_coord * 8) + (pieces[piece].y_coord + 1);
-      $("#" + square.toString()).html("<span class='glyphicon glyphicon-" + type
-                                      + color + " piece' aria-hidden='true'></span>");
-    }
-  });
-</script>
