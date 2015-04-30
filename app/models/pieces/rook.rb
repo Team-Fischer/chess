@@ -1,5 +1,5 @@
 class Rook < Piece
   def glyph
-    return 'tower'
+    'tower'
   end
 end
