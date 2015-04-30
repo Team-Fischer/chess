@@ -9,7 +9,10 @@
 
 <div class="text-center">
 	<h3>Users Online</h3>
-		<%= User.online %>
-		<p>ActiveRecord::Relation::ActiveRecord_Relation_User:0xb490667c</p>
+	<ul>
+		<% User.online.each do |user| %>
+		  <li><%= user.email %></li>
+		<% end %>
+	</ul>
 </div>
 		

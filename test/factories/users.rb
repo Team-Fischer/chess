@@ -1,8 +1,7 @@
 FactoryGirl.define do
   factory :user do
-  	id 1
-  	email {SecureRandom.urlsafe_base64(5) + '@gmail.com'}
-  	password '12356789'
+    provider "facebook"
+    sequence(:uid) { |n| "#{n}" }
+    sequence(:name) { |n| "Person_#{n}" }
   end
-
 end
