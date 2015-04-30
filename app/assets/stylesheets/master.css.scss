@@ -7,14 +7,27 @@
 .chess-board {
   margin: 0 auto;
   border-collapse: collapse;
-  background: black;
-  border: 5px solid darkgray;
+  background-color: rgba(0, 0, 0, 0.75);
+  border: 10px solid black;
 }
 .chess-squares td {
   width: 75px; height: 75px;
 }
 
 tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
-  background: white;
+  background-color: rgba(255, 255, 255, 0.75);
 }
 
+.piece {
+  font-size: 45px;
+  text-align: center;
+  display: block;
+}
+
+.black {
+  color: black;
+}
+
+.white {
+  color: white;
+}

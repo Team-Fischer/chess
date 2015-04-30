@@ -1,9 +1,20 @@
 <h1 class="text-center">Have Fun</h1>
 
+<!-- drawing chess board -->
 <table class='chess-board chess-squares'>
-  <% @rows.times do |row| %>
+  <% 8.times do |row| %>
     <tr>
-      <% @columns.times do |column| %><td id="<%= (row + 1) * (column + 1) %>"></td><% end %>
+      <% 8.times do |column| %>
+        <td id="<%= (row * 8) + (column + 1) %>">
+          <% if @game.piece_at(row, column) %>
+            <span class="glyphicon glyphicon-<%= @game.piece_at(row, column).glyph %>
+                        <%= @game.piece_at(row, column).color %>
+                        piece" aria-hidden="true">
+            </span>
+          <% end %>
+        </td>
+      <% end %>
     </tr>
   <% end %>
 </table>
+

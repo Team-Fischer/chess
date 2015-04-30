@@ -4,12 +4,18 @@ class GamesController < ApplicationController
   end
 
   def show
-    @rows = 8
-    @columns = 8
+    @game = Game.where(:id => params[:id]).first
   end
 
   def create
     @game = Game.create
     redirect_to game_path(@game)
   end
+
+  private
+
+  def games_params
+    params.require(:game).permit(:black_user_id, :white_user_id)
+  end
+
 end
