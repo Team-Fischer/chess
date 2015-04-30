@@ -124,4 +124,11 @@ class PieceTest < ActiveSupport::TestCase
 
     assert_equal false, knight.is_obstructed?(0,2)
   end
+  
+  test "check rook obstruction" do
+    game = create(:game)
+    rook = game.pieces.rooks.where(:x_coord => 0, :y_coord => 0).first
+    assert_equal true, rook.is_obstructed?(0, 1)
+    assert_equal true, rook.is_obstructed?(0, 4)
+  end
 end
