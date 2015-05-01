@@ -1,17 +1,9 @@
 class King < Piece
   def valid_move?(x_destination, y_destination)
-    x_distance = (x_coord - x_destination).abs
-    y_distance = (y_coord - y_destination).abs
+    move = [(x_coord - x_destination).abs, (y_coord - y_destination).abs]
 
-    case
-    when x_distance == 1 && y_distance == 1
-      return true
-    when x_distance == 1 && y_distance == 0
-      return true
-    when x_distance == 0 && y_distance == 1
-      return true
-    else
-      return false
-    end
+    valid_moves = [[1,1],[1,0],[0,1]]
+
+    valid_moves.include?(move)
   end
 end
