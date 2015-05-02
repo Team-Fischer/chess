@@ -76,6 +76,16 @@ class PieceTest < ActiveSupport::TestCase
     assert_equal false, rook.valid_move?((rook.x_coord + 2), (rook.y_coord + 3)), 'move on x and y axis'
   end
 
+  test 'bishop move is valid' do
+    bishop = @game.bishops.first
+    assert_equal true, bishop.valid_move?((bishop.x_coord + 2), bishop.y_coord + 2), 'move is diag'
+  end
+
+  test 'bishop move is not valid' do
+    bishop = @game.bishops.first
+    assert_equal false, bishop.valid_move?(bishop.x_coord, (bishop.y_coord + 3)), 'move on x axis'
+  end  
+
   test 'move is on board' do
     king = @game.kings.first
     assert_equal king.on_board?(7, 7), true, 'king should be on board'
