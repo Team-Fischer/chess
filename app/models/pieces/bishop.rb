@@ -4,6 +4,6 @@ class Bishop < Piece
   y_dist = (y_coord - y_destination).abs
 
   # move must be diag 
-  x_dist == y_dist)
+  (x_dist == y_dist)
  end
 end
