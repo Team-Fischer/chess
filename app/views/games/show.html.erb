@@ -1,15 +1,16 @@
-<h1 class="text-center">Have Fun</h1>
+<h1 class='text-center'>Have Fun</h1>
 
 <!-- drawing chess board -->
 <table class='chess-board chess-squares'>
   <% 8.times do |row| %>
     <tr>
       <% 8.times do |column| %>
-        <td id="<%= (row * 8) + (column + 1) %>">
+        <% calc_id = (row * 8) + (column + 1) %>
+        <td ondragover='return false' ondrop='drop(event)' id='<%= calc_id %>'>
           <% if @game.piece_at(row, column) %>
-            <span class="glyphicon glyphicon-<%= @game.piece_at(row, column).glyph %>
-                        <%= @game.piece_at(row, column).color %>
-                        piece" aria-hidden="true">
+            <span class='glyphicon glyphicon-<%= @game.piece_at(row, column).glyph %>
+                  <%= @game.piece_at(row, column).color %> piece' aria-hidden='true'
+                  ondragstart='drag(event)' draggable='true' id='p<%= calc_id %>'>
             </span>
           <% end %>
         </td>
@@ -18,3 +19,14 @@
   <% end %>
 </table>
 
+<script>
+  function drag(event) {
+    event.dataTransfer.setData('Piece', event.target.id);
+  }
+
+  function drop(event) {
+    event.preventDefault();
+    var data = event.dataTransfer.getData('Piece');
+    event.target.appendChild(document.getElementById(data));
+  }
+</script>
