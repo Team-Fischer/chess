@@ -78,14 +78,14 @@ class PieceTest < ActiveSupport::TestCase
 
   test 'knight move is valid' do
     knight = @game.knights.first
-    assert_equal true, knight.valid_move?((knight.x_coord + 4), knight.y_coord + 1), 'move 4 spaces up and 1 to the side'
-    assert_equal true, knight.valid_move?((knight.x_coord + 1), knight.y_coord + 4), 'move 1 space up and 4 to the side'
+    assert_equal true, knight.valid_move?((knight.x_coord + 2), knight.y_coord + 1), 'move 2 spaces up and 1 to the side'
+    assert_equal true, knight.valid_move?((knight.x_coord + 1), knight.y_coord + 2), 'move 1 space up and 2 to the side'
   end
 
   test 'knight move is not valid' do
     knight = @game.knights.first
-    assert_equal false, knight.valid_move?((knight.x_coord + 3), knight.y_coord + 1), 'knight should not be able to move less than 4 spaces in vertically'
-    assert_equal false, knight.valid_move?((knight.x_coord + 4), knight.y_coord + 2), 'knight should not be able to move more than 1 space horizontally'
+    assert_equal false, knight.valid_move?((knight.x_coord + 2), knight.y_coord + 2), 'knight should not be able to move 2 spaces both ways'
+    assert_equal false, knight.valid_move?((knight.x_coord + 0), knight.y_coord + 2), 'knight should not be able to move directly horizontally/vertically'
   end
 
   test 'move is on board' do
