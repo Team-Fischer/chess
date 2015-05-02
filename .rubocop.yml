@@ -2,4 +2,7 @@ Documentation:
   Enabled: false
 
 Style/HashSyntax:
-  Enabled: true
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 120

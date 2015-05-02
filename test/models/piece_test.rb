@@ -76,6 +76,18 @@ class PieceTest < ActiveSupport::TestCase
     assert_equal false, rook.valid_move?((rook.x_coord + 2), (rook.y_coord + 3)), 'move on x and y axis'
   end
 
+  test 'knight move is valid' do
+    knight = @game.knights.first
+    assert_equal true, knight.valid_move?((knight.x_coord + 2), knight.y_coord + 1), 'move 2 spaces up and 1 to the side'
+    assert_equal true, knight.valid_move?((knight.x_coord + 1), knight.y_coord + 2), 'move 1 space up and 2 to the side'
+  end
+
+  test 'knight move is not valid' do
+    knight = @game.knights.first
+    assert_equal false, knight.valid_move?((knight.x_coord + 2), knight.y_coord + 2), 'knight should not be able to move 2 spaces both ways'
+    assert_equal false, knight.valid_move?((knight.x_coord + 0), knight.y_coord + 2), 'knight should not be able to move directly horizontally/vertically'
+  end
+
   test 'move is on board' do
     king = @game.kings.first
     assert_equal king.on_board?(7, 7), true, 'king should be on board'
@@ -95,4 +107,5 @@ class PieceTest < ActiveSupport::TestCase
     king = create(:king)
     assert_equal 'king', king.glyph, 'King glyph should be king'
   end
+
 end
