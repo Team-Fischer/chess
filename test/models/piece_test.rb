@@ -108,8 +108,4 @@ class PieceTest < ActiveSupport::TestCase
     assert_equal 'king', king.glyph, 'King glyph should be king'
   end
 
-  test 'Knight glyph is knight' do
-    knight = create(:knight)
-    assert_equal 'knight', knight.glyph, 'Knight glyph should be knight'
-  end
 end

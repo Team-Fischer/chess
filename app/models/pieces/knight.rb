@@ -6,8 +6,4 @@ class Knight < Piece
     (x_dist == 2 && y_dist == 1) || (x_dist == 1 && y_dist == 2)
   end
 
-  def glyph
-    'knight'
-  end
-
 end
