@@ -8,8 +8,13 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = Game.create
+    @game = Game.create(:white_user_id => current_user)
     redirect_to game_path(@game)
+  end
+
+  def update
+    @game = Game.find(params[:id])
+    @game.update_attributes(:black_user_id => current_user)    
   end
 
   private

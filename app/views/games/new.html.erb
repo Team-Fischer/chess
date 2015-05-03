@@ -3,6 +3,10 @@
   <%= simple_form_for @game, :url => games_path do |f| %>
     <%= f.submit "Play", :class => 'btn btn-primary' %>
   <% end %>
-  <br />
+
+<h2 class="text-center">Join a Game</h2>
+  <%= link_to 'Join' , games_path(@game), :class => 'btn btn-success', :method => :put %>
+  
+<br />
 
 		
