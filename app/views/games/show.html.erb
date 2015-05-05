@@ -18,39 +18,3 @@
     </tr>
   <% end %>
 </table>
-
-<script>
-  function drag(event) {
-    event.dataTransfer.setData('Piece', event.target.id);
-    event.dataTransfer.setData('id', event.target.getAttribute('data-piece'));
-  }
-
-  function drop(event) {
-    event.preventDefault();
-    var pieceEl = event.dataTransfer.getData('Piece');
-    var pieceId = event.dataTransfer.getData('id');
-    var gameId = document.getElementById("board").getAttribute("data-game");
-    var postUrl = "/games/" + gameId + "/pieces/" + pieceId + ".json";
-    var token = $("meta[name='csrf-token']").attr("content");
-    if (parseInt(event.target.id) % 8 == 0) {
-      var xCoord = parseInt(parseInt(event.target.id) / 8) - 1;
-      var yCoord = 7;
-    } else {
-      var xCoord = parseInt(parseInt(event.target.id) / 8);
-      var yCoord = parseInt(parseInt(event.target.id) % 8) - 1;
-    }
-//    console.log(pieceEl + " " + pieceId + " " + gameId + " " + postUrl + "\n" + token
-//                + " " + xCoord.toString() + " " + yCoord.toString() + " " + event.target.id);
-    $.ajax({
-      url: postUrl,
-      method: "PUT",
-      data: {
-        authenticity_token: token,
-        x_coord: xCoord,
-        y_coord: yCoord
-      },
-      dataType: "json"
-    });
-    window.location.reload();
-  }
-</script>

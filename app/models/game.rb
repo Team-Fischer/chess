@@ -32,13 +32,13 @@ class Game < ActiveRecord::Base
     return @board if @board.present?
     @board = Array.new(8) { Array.new(8) }
     pieces.each do |piece|
-      @board[piece.x_coord][piece.y_coord] = piece
+      @board[piece.y_coord][piece.x_coord] = piece
     end
     @board
   end
 
   def piece_at(x, y)
-    board_state[x][y]
+    board_state[y][x]
   end
   
   def is_full?
