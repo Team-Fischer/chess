@@ -10,7 +10,7 @@ function drag(event) {
 function drop(event) {
   event.preventDefault();
   updatePiece();
-  window.location.reload();
+  drawBoard();
 }
 
 function updatePiece() {
@@ -36,3 +36,31 @@ function updatePiece() {
     dataType: "json"
   });
 }
+
+function drawBoard() {
+  var gameId = document.getElementById("board").getAttribute("data-game");
+  var getUrl = "/games/" + gameId + ".json";
+  $.ajax({
+    url: getUrl,
+    method: "GET",
+    dataType: "json"
+  })
+    .done(function (json){
+      var board = json.game.board_state;
+      for (var cols=0;cols<8;cols++){
+        for (var row=0;row<8;row++){
+          if(board[cols][row] != null){
+            var square = (board[cols][row].x_coord * 8) + (board[cols][row].y_coord + 1);
+            $("#" + square.toString()).html("<span class='glyphicon glyphicon-" + board[cols][row].glyph +
+                " piece " + board[cols][row].color + "' aria-hidden='true' ondragstart='drag(event)' " +
+                "draggable='true' data-piece='" + board[cols][row].id + "' id='" + square + "p'></span>");
+          } else {
+            var emptySquare = (row * 8) + (cols + 1);
+            $("#" + emptySquare.toString()).html("");
+          }
+        }
+      }
+    }
+  );
+}
+

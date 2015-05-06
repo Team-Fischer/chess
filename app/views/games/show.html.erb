@@ -6,15 +6,14 @@
     <tr>
       <% 8.times do |column| %>
         <% calc_id = (row * 8) + (column + 1) %>
-        <td ondragover='return false' ondrop='drop(event)' id='<%= calc_id %>'>
-          <% if @game.piece_at(row, column) %>
-            <span class='glyphicon glyphicon-<%= @game.piece_at(row, column).glyph %>  piece
-                  <%= @game.piece_at(row, column).color %>' aria-hidden='true'ondragstart='drag(event)'
-                  draggable='true' id='<%= calc_id %>p' data-piece=<%= @game.piece_at(row, column).id %>>
-            </span>
-          <% end %>
-        </td>
+        <td ondragover='return false' ondrop='drop(event)' id='<%= calc_id %>'></td>
       <% end %>
     </tr>
   <% end %>
 </table>
+
+<script>
+  $(document).ready(function(){
+    drawBoard();
+  });
+</script>
