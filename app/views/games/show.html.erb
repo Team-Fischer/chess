@@ -1,20 +1,19 @@
-<h1 class="text-center">Have Fun</h1>
+<h1 class='text-center'>Have Fun</h1>
 
 <!-- drawing chess board -->
-<table class='chess-board chess-squares'>
+<table class='chess-board chess-squares' data-game='<%= @game.id %>' id='board'>
   <% 8.times do |row| %>
     <tr>
       <% 8.times do |column| %>
-        <td id="<%= (row * 8) + (column + 1) %>">
-          <% if @game.piece_at(row, column) %>
-            <span class="glyphicon glyphicon-<%= @game.piece_at(row, column).glyph %>
-                        <%= @game.piece_at(row, column).color %>
-                        piece" aria-hidden="true">
-            </span>
-          <% end %>
-        </td>
+        <% calc_id = (row * 8) + (column + 1) %>
+        <td ondragover='return false' ondrop='drop(event)' id='<%= calc_id %>'></td>
       <% end %>
     </tr>
   <% end %>
 </table>
 
+<script>
+  $(document).ready(function(){
+    drawBoard();
+  });
+</script>
