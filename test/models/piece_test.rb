@@ -100,12 +100,16 @@ class PieceTest < ActiveSupport::TestCase
 
   test 'pawn move is valid' do
     pawn = @game.pawns.first
-    assert_equal true, pawn.valid_move?(pawn.x_coord, (pawn.y_coord + 2)), 'move 2 spaces on y axis'
+    assert pawn.valid_move?(pawn.x_coord, (pawn.y_coord + 2))
+    pawn.moved = true
+    assert pawn.valid_move?(pawn.x_coord, (pawn.y_coord + 1))
   end
 
   test 'pawn move is invalid' do
     pawn = @game.pawns.first
-    assert_equal false, pawn.valid_move?((pawn.x_coord + 1), pawn.y_coord), 'pawn cannot move on x axis'
+    refute pawn.valid_move?((pawn.x_coord + 1), pawn.y_coord)
+    pawn.moved = true
+    refute pawn.valid_move?(pawn.x_coord, (pawn.y_coord + 2))
   end
 
   test 'move is on board' do
