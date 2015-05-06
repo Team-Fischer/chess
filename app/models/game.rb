@@ -19,8 +19,8 @@ class Game < ActiveRecord::Base
       bishops.create(color: color, x_coord: x_others, y_coord: 2)
       queens.create(color: color, x_coord: x_others, y_coord: 3)
       kings.create(color: color, x_coord: x_others, y_coord: 4)
-      knights.create(color: color, x_coord: x_others, y_coord: 5)
-      bishops.create(color: color, x_coord: x_others, y_coord: 6)
+      bishops.create(color: color, x_coord: x_others, y_coord: 5)
+      knights.create(color: color, x_coord: x_others, y_coord: 6)
       rooks.create(color: color, x_coord: x_others, y_coord: 7)
       8.times do |counter|
         pawns.create(color: color, x_coord: x_pawns, y_coord: counter)
@@ -32,13 +32,13 @@ class Game < ActiveRecord::Base
     return @board if @board.present?
     @board = Array.new(8) { Array.new(8) }
     pieces.each do |piece|
-      @board[piece.x_coord][piece.y_coord] = piece
+      @board[piece.y_coord][piece.x_coord] = piece
     end
     @board
   end
 
   def piece_at(x, y)
-    board_state[x][y]
+    board_state[y][x]
   end
   
   def is_full?
