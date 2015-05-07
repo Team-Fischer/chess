@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto+Slab);
+
 /* Where some styles will live */
 
 .text-center {
@@ -45,5 +47,60 @@ body{
 
 .white {
   color: white;
+}
+
+.front_hero{
+  background: url('hero.jpg') no-repeat center top fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  margin-top: -25px;
+  width: 100%;
+  height: 500px;
+  box-shadow: 0px 3px 8px #2a2a2a;
+}
+
+.frosty {
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  height: 15%;
+  position: relative;
+  top: 80%;
+}
+
+.frosty-cap {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+}
+.navbar-inverse {
+  margin-bottom: 0px;
+  border-radius: 0;
+}
+
+.navbar-inverse a.navbar-brand {
+  font-family: "Roboto Slab", serif;
+  font-weight: 100;
+  background: none repeat scroll 0 0 transparent;
+  color: #FFF;
+  font-size: 28px;
+  margin: 0px;
+}
+
+h1, h2, h3 {
+    font-family: "Roboto Slab", serif;
+}
+
+a {
+  -webkit-transition: 500ms;
+  -moz-transition: 500ms;
+  -o-transition: 500ms;
+  transition: 500ms;  
+}
+
+.footer {
+  background-color: #222222;
+  height: 50px;
 }
 
