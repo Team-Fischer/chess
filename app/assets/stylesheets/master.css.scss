@@ -69,8 +69,12 @@ tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
   font-weight: 100;
   background: none repeat scroll 0 0 transparent;
   color: #FFF;
-  font-size: 30px;
+  font-size: 28px;
   margin: 0px;
+}
+
+h1, h2, h3 {
+    font-family: "Roboto Slab", serif;
 }
 
 a {
@@ -78,4 +82,9 @@ a {
   -moz-transition: 500ms;
   -o-transition: 500ms;
   transition: 500ms;  
+}
+
+.footer {
+  background-color: #222222;
+  height: 50px;
 }
