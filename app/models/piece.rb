@@ -19,6 +19,24 @@ class Piece < ActiveRecord::Base
     self.type.downcase
   end
 
+  def move_to(x, y)
+    x_dest = x
+    y_dest = y
+
+    if self.valid_move?(x_dest, y_dest)
+      # IF destination OBSTRUCTED by piece
+        # IF yes, can it be CAPTURED?
+          # CAPTURE
+        # ElSE cannot make move
+          # ERROR: Cannot make a move, make another
+        # end
+      # ELSE not obstructed
+        self.update_attributes(x_coord: x_dest, y_coord: y_dest)        
+      # end
+    end
+  end
+
+
   def on_board?(x, y)
     (0..7).include?(x) && (0..7).include?(y)
   end

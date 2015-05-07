@@ -132,4 +132,11 @@ class PieceTest < ActiveSupport::TestCase
     assert_equal 'king', king.glyph, 'King glyph should be king'
   end
 
+  test 'King moves forward' do
+    king = create(:king, x_coord: 4, y_coord: 0)
+    king.move_to(4, 1)
+    assert_equal 4, king.x_coord, 'King stays on the same column while moving up a row'
+    assert_equal 1, king.y_coord, 'King should be able to move forward up and down'
+  end
+
 end
