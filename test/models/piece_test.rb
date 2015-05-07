@@ -98,6 +98,20 @@ class PieceTest < ActiveSupport::TestCase
     assert_equal false, knight.valid_move?((knight.x_coord + 0), knight.y_coord + 2), 'knight should not be able to move directly horizontally/vertically'
   end
 
+  test 'pawn move is valid' do
+    pawn = @game.pawns.first
+    assert pawn.valid_move?(pawn.x_coord, (pawn.y_coord + 2))
+    pawn.moved = true
+    assert pawn.valid_move?(pawn.x_coord, (pawn.y_coord + 1))
+  end
+
+  test 'pawn move is invalid' do
+    pawn = @game.pawns.first
+    refute pawn.valid_move?((pawn.x_coord + 1), pawn.y_coord)
+    pawn.moved = true
+    refute pawn.valid_move?(pawn.x_coord, (pawn.y_coord + 2))
+  end
+
   test 'move is on board' do
     king = @game.kings.first
     assert_equal king.on_board?(7, 7), true, 'king should be on board'
