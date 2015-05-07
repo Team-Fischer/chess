@@ -1,0 +1,8 @@
+<h2 class="text-center">Join a Game</h2>
+  <% @games.each do |game| %>
+    <% unless game.is_full? %>
+      <%= User.where(:id => game.white_user_id).first.email %>
+      <%= link_to 'Join' , game_path(game), :class => 'btn btn-success', :method => :put %>
+      <br>
+    <% end %>
+  <% end %>  

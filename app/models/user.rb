@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   has_many :games
   has_many :pieces
-  
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
 
@@ -9,11 +9,13 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:facebook]
 
+
   scope :online, -> { where('updated_at >= ?', 10.minutes.ago) }
 
+
   def self.from_omniauth(auth)
-  	where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-  		user.provider = auth.provider
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.provider = auth.provider
       user.uid = auth.uid
       require 'debugger'; debugger
   		user.email = auth.info.email || ""
@@ -24,5 +26,6 @@ class User < ActiveRecord::Base
   def self.email
     user.email = User.online
   end
+
 
 end

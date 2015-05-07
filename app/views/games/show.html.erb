@@ -1,14 +1,19 @@
-<h1 class="text-center">Have Fun</h1>
+<h1 class='text-center'>Have Fun</h1>
 
-<table class='chess-board chess-squares'>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<!-- drawing chess board -->
+<table class='chess-board chess-squares' data-game='<%= @game.id %>' id='board'>
+  <% 8.times do |row| %>
+    <tr>
+      <% 8.times do |column| %>
+        <% calc_id = (row * 8) + (column + 1) %>
+        <td ondragover='return false' ondrop='drop(event)' id='<%= calc_id %>'></td>
+      <% end %>
+    </tr>
+  <% end %>
 </table>
 
-
+<script>
+  $(document).ready(function(){
+    drawBoard();
+  });
+</script>
