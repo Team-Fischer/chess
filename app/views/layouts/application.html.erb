@@ -8,14 +8,6 @@
 </head>
 
 <body class="Site">
-  <div id="headerbg">
-    <h2>Team Fischer</h2>
-    <% if user_signed_in? %>
-      <p><%= current_user.email %></p>
-    <% end %>
-  </div>
-
-
 <script>
 +  window.fbAsyncInit = function() {
 +    FB.init({
