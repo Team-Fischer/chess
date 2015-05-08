@@ -20,6 +20,21 @@ tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
   background-color: rgba(255, 255, 255, 0.75);
 }
 
+body{
+	margin: 0px;
+	background:#FFF;
+}
+
+#headerbg{
+	background:#cccc66;
+	text-align:center;
+	padding:20px;
+}
+
+.clear {
+	clear:both;
+}
+
 .piece {
   font-size: 50px;
   text-align: center;
@@ -88,3 +103,4 @@ a {
   background-color: #222222;
   height: 50px;
 }
+
