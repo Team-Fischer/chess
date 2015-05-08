@@ -6,7 +6,7 @@
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body class="Site">
 <script>
 +  window.fbAsyncInit = function() {
 +    FB.init({
@@ -25,7 +25,7 @@
 +   }(document, 'script', 'facebook-jssdk'));
 +</script>
 
-
+<div class="Site-content">
 <nav class="navbar navbar-inverse" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -64,8 +64,8 @@
 <% end %>
 
 <%= yield %>
-
-<div class="row-fluid footer"></div>
+</div>
+<div class="row-fluid footer Site-footer"></div>
 
 </body>
 

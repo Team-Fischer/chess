@@ -88,3 +88,17 @@ a {
   background-color: #222222;
   height: 50px;
 }
+
+.Site {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.Site-content {
+  flex: 1;
+}
+
+.Site-footer {
+  flex: none; /* 2 */
+}
