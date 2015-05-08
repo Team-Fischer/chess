@@ -15,12 +15,12 @@ class GameTest < ActiveSupport::TestCase
   end
 
   test 'game is full' do
-    game = create(:game, white_user_id: 1, black_user_id: 2)
+    game = create(:game, :white_user_id => 1, :black_user_id => 2)
     assert game.is_full?, 'the game is full'
   end
 
   test 'game is not full' do
-    game = create(:game, white_user_id: 1)
+    game = create(:game, :white_user_id => 1)
     refute game.is_full?, 'the game is not full'
   end    
   
