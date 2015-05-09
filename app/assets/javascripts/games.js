@@ -18,7 +18,6 @@ function updatePiece(event) {
   var postUrl = "/games/" + gameId + "/pieces/" + pieceId + ".json";
   var xCoord = parseInt(document.getElementById(event.target.id).getAttribute("data-column"));
   var yCoord = parseInt(document.getElementById(event.target.id).getAttribute("data-row"));
-  console.log(xCoord, yCoord);
   $.ajax({
     url: postUrl,
     method: "PUT",
