@@ -1,12 +1,15 @@
 <h1 class='text-center'>Have Fun</h1>
 
+<p id='piece-warning'></p>
+
 <!-- drawing chess board -->
 <table class='chess-board chess-squares' data-game='<%= @game.id %>' id='board'>
   <% 8.times do |row| %>
     <tr>
       <% 8.times do |column| %>
         <% calc_id = (row * 8) + (column + 1) %>
-        <td ondragover='return false' ondrop='drop(event)' id='<%= calc_id %>'></td>
+        <td ondragover='return false' ondrop='drop(event)' id='<%= calc_id %>'
+            data-row='<%= row %>' data-column='<%= column %>'></td>
       <% end %>
     </tr>
   <% end %>
