@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!, :only => [:create, :update, :show]
+
   def index
     @games = Game.all
   end
@@ -33,5 +34,4 @@ class GamesController < ApplicationController
   def games_params
     params.require(:game).permit(:black_user_id, :white_user_id)
   end
-
 end
