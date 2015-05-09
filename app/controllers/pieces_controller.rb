@@ -7,9 +7,11 @@ class PiecesController < ApplicationController
 
   def update
     @piece = Piece.where(:id => params[:id]).first
-
-    @piece.update_attributes(:x_coord => params[:x_coord], :y_coord => params[:y_coord])
-    if @piece.valid?
+    x_dest = params[:x_coord]
+    y_dest = params[:y_coord]
+    
+    if @piece.valid_move?(x_dest, y_dest)
+      @piece.move_to(x_dest, y_dest)
       render :text => :success
     else
       render :text => :unprocessable_entity

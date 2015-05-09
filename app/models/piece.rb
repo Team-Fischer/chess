@@ -19,6 +19,11 @@ class Piece < ActiveRecord::Base
     self.type.downcase
   end
 
+  def move_to(x, y)
+    self.update_attributes(x_coord: x, y_coord: y)        
+  end
+
+
   def on_board?(x, y)
     (0..7).include?(x) && (0..7).include?(y)
   end
