@@ -11,6 +11,7 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.where(:id => params[:id]).first
+    render :text => 'That game does not exist.', :status => :not_found if @game.blank?
   end
 
   def create
