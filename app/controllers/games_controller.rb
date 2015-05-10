@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!, :only => [:create, :update, :show]
+
   def index
     @games = Game.all
   end
@@ -10,6 +11,7 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.where(:id => params[:id]).first
+    render :text => 'That game does not exist.', :status => :not_found if @game.blank?
   end
 
   def create
@@ -33,5 +35,4 @@ class GamesController < ApplicationController
   def games_params
     params.require(:game).permit(:black_user_id, :white_user_id)
   end
-
 end

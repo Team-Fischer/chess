@@ -23,5 +23,14 @@ class GameTest < ActiveSupport::TestCase
     game = create(:game, :white_user_id => 1)
     refute game.is_full?, 'the game is not full'
   end    
-  
+
+  test 'piece is at 0,0' do
+    game = create(:game)
+    assert game.piece_at(0,0)
+  end
+
+  test 'piece not at 4,4' do
+    game = create(:game)
+    refute game.piece_at(4,4)
+  end
 end
