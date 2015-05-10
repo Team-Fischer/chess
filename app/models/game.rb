@@ -1,5 +1,6 @@
 class Game < ActiveRecord::Base
   after_create :populate_board
+  after_create :starting_turn
 
   has_many :users
   has_many :pieces, :dependent => :destroy
@@ -44,4 +45,9 @@ class Game < ActiveRecord::Base
   def is_full?
     white_user_id && black_user_id
   end
+  
+  def starting_turn
+    self.player_turn = "white"
+  end
+
 end
