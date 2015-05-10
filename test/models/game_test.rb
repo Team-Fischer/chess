@@ -39,4 +39,11 @@ class GameTest < ActiveSupport::TestCase
     start = game.player_turn
     assert_equal "white", start, "White has first turn"
   end
+
+  test 'Assign pieces to players' do
+    game = create(:game)
+    wking = game.piece_at(4,0)
+    assert_equal "white", wking.color, "first king should be white"
+  end  
+
 end
