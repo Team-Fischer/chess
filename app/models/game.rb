@@ -11,12 +11,10 @@ class Game < ActiveRecord::Base
     %w(black white).each do |color|
       if color == 'black'
         y_pawns = 1
-        y_others = 0
-        
+        y_others = 0        
       else
         y_pawns = 6
         y_others = 7
-
       end
       rooks.create(color: color, x_coord: 0, y_coord: y_others)
       knights.create(color: color, x_coord: 1, y_coord: y_others)
@@ -54,7 +52,6 @@ class Game < ActiveRecord::Base
   end
 
   def assign_pieces
-
     pieces.where(color: "white").each do |piece|
       piece.update_attributes(user_id: white_user_id)
     end
