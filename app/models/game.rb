@@ -59,6 +59,4 @@ class Game < ActiveRecord::Base
       piece.update_attributes(user_id: black_user_id)
     end
   end
-
-
 end
