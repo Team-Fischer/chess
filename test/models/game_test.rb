@@ -34,10 +34,10 @@ class GameTest < ActiveSupport::TestCase
     refute game.piece_at(4,4)
   end
 
-  test 'First turn goes to white' do
+  test 'First move goes to white' do
     game = create(:game)
     start = game.player_turn
-    assert_equal "white", start, "White has first turn"
+    assert_equal "white", start, "White has first move"
   end
 
   test 'Assign pieces to players' do
