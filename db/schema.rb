@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20150510223929) do
 
   create_table "pieces", force: true do |t|
     t.integer  "game_id"
+    t.integer  "user_id"
     t.string   "type"
     t.string   "color"
     t.integer  "x_coord"

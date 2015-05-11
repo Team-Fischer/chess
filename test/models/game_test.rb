@@ -41,9 +41,9 @@ class GameTest < ActiveSupport::TestCase
   end
 
   test 'Assign pieces to players' do
-    game = create(:game)
-    wking = game.piece_at(4,0)
-    assert_equal "white", wking.color, "first king should be white"
+    game = create(:game, :white_user_id => 1, :black_user_id => 2)
+    assert_equal 16, game.pieces.where(user_id: 1).count, '16 white pieces should connect to white_user_id (1)'
+    assert_equal 16, game.pieces.where(user_id: 2).count, '16 black pieces should connect to black_user_id (2)'
   end  
 
 end

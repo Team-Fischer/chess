@@ -1,6 +1,7 @@
 class Game < ActiveRecord::Base
   after_create :populate_board
   after_create :starting_turn
+  after_create :assign_pieces
 
   has_many :users
   has_many :pieces, :dependent => :destroy
@@ -11,9 +12,11 @@ class Game < ActiveRecord::Base
       if color == 'black'
         y_pawns = 1
         y_others = 0
+        
       else
         y_pawns = 6
         y_others = 7
+
       end
       rooks.create(color: color, x_coord: 0, y_coord: y_others)
       knights.create(color: color, x_coord: 1, y_coord: y_others)
@@ -48,6 +51,16 @@ class Game < ActiveRecord::Base
   
   def starting_turn
     self.player_turn = "white"
+  end
+
+  def assign_pieces
+
+    pieces.where(color: "white").each do |piece|
+      piece.update_attributes(user_id: white_user_id)
+    end
+    pieces.where(color: "black").each do |piece|
+      piece.update_attributes(user_id: black_user_id)
+    end
   end
 
 end
