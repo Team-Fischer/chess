@@ -44,4 +44,5 @@ class Game < ActiveRecord::Base
   def is_full?
     white_user_id && black_user_id
   end
+
 end
