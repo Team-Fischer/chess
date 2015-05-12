@@ -59,11 +59,11 @@ class Game < ActiveRecord::Base
   end
 
   def assign_pieces
-    pieces.where(color: "white").each do |piece|
-      piece.update_attributes(user_id: white_user_id)
+    pieces.where(:color => 'white').each do |piece|
+      piece.update_attributes(:user_id => white_user_id)
     end
-    pieces.where(color: "black").each do |piece|
-      piece.update_attributes(user_id: black_user_id)
+    pieces.where(:color => 'black').each do |piece|
+      piece.update_attributes(:user_id => black_user_id)
     end
   end
 end
