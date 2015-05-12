@@ -7,11 +7,13 @@ class PiecesController < ApplicationController
 
   def update
     @piece = Piece.where(:id => params[:id]).first
+    @game = Game.where(:id => params[:game_id]).first
     x_dest = params[:x_coord].to_i
     y_dest = params[:y_coord].to_i
 
     if @piece.valid_move?(x_dest, y_dest)
       @piece.move_to(x_dest, y_dest)
+      @game.in_check?(@piece.color)
       render :json => :success
     else
       render :text => 'invalid', :status => :unprocessable_entity
