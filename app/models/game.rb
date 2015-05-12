@@ -45,4 +45,7 @@ class Game < ActiveRecord::Base
     white_user_id && black_user_id
   end
   
+  def occupied(x, y)
+    self.pieces.where(:x_coord => x, :y_coord => y)
+  end
 end

@@ -20,7 +20,7 @@ class Piece < ActiveRecord::Base
   end
 
   def move_to(x, y)
-    dest_piece = self.game.pieces.where(:x_coord => x, :y_coord => y).first
+    dest_piece = self.game.occupied(x, y).first
     if dest_piece.present? && self.color != dest_piece.color
      # cant get this to work 
      # dest_piece.update_attributes(:x_coord => nil, :y_coord => nil)
