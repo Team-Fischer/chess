@@ -142,7 +142,21 @@ class PieceTest < ActiveSupport::TestCase
   test "check queen obstruction" do
     game = create(:game)
     queen = game.pieces.queens.where(:color => 'black').first
-  
-    assert_equal true, queen.is_obstructed?(4,1)
+    queen.update_attributes(:x_coord => 1, :y_coord => 2)
+#x, y >0
+    assert_equal false, queen.is_obstructed?(3,4)
+    assert_equal true, queen.is_obstructed?(6,7)
+#x > 0, y = 0
+    queen.update_attributes(:x_coord => 3, :y_coord => 1)
+    assert_equal false, queen.is_obstructed?(3, 1)
+    queen.update_attributes(:x_coord => 1, :y_coord => 1)
+    assert_equal true, queen.is_obstructed?(2, 1)
+#x > 0, y < 0
+    assert_equal false, queen.is_obstructed?(2, 2)
+#x, y < 0
+    assert_equal false, queen.is_obstructed?(1, 2)
+# x < 0, y = 0    
+    assert_equal false, queen.is_obstructed?(0, 3)
   end
+
 end
