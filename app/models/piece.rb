@@ -20,7 +20,13 @@ class Piece < ActiveRecord::Base
   end
 
   def move_to(x, y)
-    self.update_attributes(:x_coord => x, :y_coord => y, :moved => true)
+    dest_piece = self.game.occupied(x, y).first
+    if dest_piece.nil?
+      self.update_attributes(:x_coord => x, :y_coord => y, :moved => true)
+    elsif dest_peice != self.color
+      dest_piece.update_attributes(:x_coord => nil, :y_coord => nil)
+      self.update_attributes(:x_coord => x, :y_coord => y, :moved => true)
+    end
   end
 
 
