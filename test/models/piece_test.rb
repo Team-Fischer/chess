@@ -107,7 +107,7 @@ class PieceTest < ActiveSupport::TestCase
 
   test 'queen move is not valid' do
     queen = @game.queens.first
-    assert queen.valid_move?((queen.x_coord + 1), (queen.y_coord + 2)), "queen can't move like knight"
+    refute queen.valid_move?((queen.x_coord + 1), (queen.y_coord + 2)), "queen can't move like knight"
   end
 
   test 'pawn move is valid' do
