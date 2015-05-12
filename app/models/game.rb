@@ -50,6 +50,14 @@ class Game < ActiveRecord::Base
     self.update_attributes(:player_turn => 'white')
   end
 
+  def next_turn
+    if self.player_turn == 'white'
+      self.update_attributes(:player_turn => 'black')
+    else
+      self.update_attributes(:player_turn => 'white')
+    end
+  end
+
   def assign_pieces
     pieces.where(color: "white").each do |piece|
       piece.update_attributes(user_id: white_user_id)

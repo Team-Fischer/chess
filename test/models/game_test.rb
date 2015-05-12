@@ -34,16 +34,11 @@ class GameTest < ActiveSupport::TestCase
     refute game.piece_at(4,4)
   end
 
-  test 'First move goes to white' do
+  test 'White set for starting move' do
     game = create(:game)
     start = game.player_turn
-    assert_equal "white", start, "White has first move"
+    assert 'white', 'Setting white as starting move'
   end
 
-  # test 'Assign pieces to players' do
-  #   game = create(:game)
-  #   assert_equal 16, game.pieces.where(:user_id => white_user_id).count, '16 white pieces should connect to white_user_id (1)'
-  #   assert_equal 16, game.pieces.where(:user_id => black_user_id).count, '16 black pieces should connect to black_user_id (2)'
-  # end
 
 end
