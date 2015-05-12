@@ -1,7 +1,6 @@
 class Game < ActiveRecord::Base
   after_create :populate_board
   after_create :first_move
-  after_create :assign_pieces, :if => :is_full?
 
   has_many :users
   has_many :pieces, :dependent => :destroy
@@ -48,7 +47,7 @@ class Game < ActiveRecord::Base
   end
 
   def first_move
-    self.player_turn = 'white'
+    self.update_attributes(:player_turn => 'white')
   end
 
   def assign_pieces

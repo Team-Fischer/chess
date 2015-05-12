@@ -26,6 +26,7 @@ class GamesController < ApplicationController
       redirect_to games_path
     else
       @game.update_attributes(:black_user_id => current_user.id)
+      @game.assign_pieces
       redirect_to game_path(@game)
     end
   end
