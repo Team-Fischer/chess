@@ -53,7 +53,8 @@ function drawBoard() {
             var square = (board[row][cols].y_coord * 8) + (board[row][cols].x_coord + 1);
             $("#" + square.toString()).html("<span class='glyphicon glyphicon-" + board[row][cols].glyph +
                 " piece " + board[row][cols].color + "' aria-hidden='true' ondragstart='drag(event)' " +
-                "draggable='true' data-piece='" + board[row][cols].id + "' id='" + square + "p'></span>");
+                "draggable='true' data-piece='" + board[row][cols].id + "' id='" + square + "p'" +
+                "data-row='" + row.toString() + "' data-column='" + cols.toString() + "'></span>");
           } else {
             var emptySquare = (row * 8) + (cols + 1);
             $("#" + emptySquare.toString()).html("");
