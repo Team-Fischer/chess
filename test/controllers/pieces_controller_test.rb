@@ -3,7 +3,8 @@ require 'test_helper'
 class PiecesControllerTest < ActionController::TestCase
   test "should move piece" do
     game = create(:game)
-    pawn = game.pawns.first
+    # make sure pawn is black
+    pawn = game.pawns.where(:color => 'black').first
 
     put :update, :game_id => game.id,
                  :id => pawn.id,
@@ -15,7 +16,8 @@ class PiecesControllerTest < ActionController::TestCase
 
   test "should not move piece" do
     game = create(:game)
-    pawn = game.pawns.first
+    # make sure pawn is black
+    pawn = game.pawns.where(:color => 'black').first
 
     put :update, :game_id => game.id,
                  :id => pawn.id,
