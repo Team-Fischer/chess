@@ -33,4 +33,7 @@ class GameTest < ActiveSupport::TestCase
     game = create(:game)
     refute game.piece_at(4,4)
   end
+
+
+
 end
