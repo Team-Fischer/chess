@@ -32,7 +32,9 @@ class Game < ActiveRecord::Base
     return @board if @board.present?
     @board = Array.new(8) { Array.new(8) }
     pieces.each do |piece|
-      @board[piece.y_coord][piece.x_coord] = piece
+      unless piece.captured
+        @board[piece.y_coord][piece.x_coord] = piece
+      end
     end
     @board
   end
@@ -43,9 +45,5 @@ class Game < ActiveRecord::Base
   
   def is_full?
     white_user_id && black_user_id
-  end
-  
-  def occupied(x, y)
-    self.pieces.where(:x_coord => x, :y_coord => y)
   end
 end

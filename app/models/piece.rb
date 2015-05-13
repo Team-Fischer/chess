@@ -20,14 +20,17 @@ class Piece < ActiveRecord::Base
   end
 
   def move_to(x, y)
-    dest_piece = self.game.occupied(x, y).first
-    if dest_piece.present? && self.color != dest_piece.color
-     # cant get this to work 
-     # dest_piece.update_attributes(:x_coord => nil, :y_coord => nil)
-      dest_piece.destroy
       self.update_attributes(:x_coord => x, :y_coord => y, :moved => true)
-    else
-      self.update_attributes(:x_coord => x, :y_coord => y, :moved => true)
+  end
+  
+  def capture(x, y)
+    x_dest = x
+    y_dest = y
+    game = Game.find(game_id)
+    occupied = game.piece_at(x_dest, y_dest)
+    
+    if occupied
+      if color != occupied.color occupied.update_attributes(:captured => true)
     end
   end
 
