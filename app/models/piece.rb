@@ -24,10 +24,8 @@ class Piece < ActiveRecord::Base
   end
   
   def capture(x, y)
-    x_dest = x
-    y_dest = y
     game = Game.find(game_id)
-    occupied = game.piece_at(x_dest, y_dest)
+    occupied = game.piece_at(x, y)
     
     if occupied
       if color != occupied.color
