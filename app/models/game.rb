@@ -32,7 +32,9 @@ class Game < ActiveRecord::Base
     return @board if @board.present?
     @board = Array.new(8) { Array.new(8) }
     pieces.each do |piece|
-      @board[piece.y_coord][piece.x_coord] = piece
+      unless piece.captured
+        @board[piece.y_coord][piece.x_coord] = piece
+      end
     end
     @board
   end
