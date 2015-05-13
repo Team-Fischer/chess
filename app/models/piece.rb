@@ -20,7 +20,7 @@ class Piece < ActiveRecord::Base
   end
 
   def move_to(x, y)
-      self.update_attributes(:x_coord => x, :y_coord => y, :moved => true)
+    update_attributes(:x_coord => x, :y_coord => y, :moved => true)
   end
   
   def capture(x, y)
