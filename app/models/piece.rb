@@ -30,7 +30,9 @@ class Piece < ActiveRecord::Base
     occupied = game.piece_at(x_dest, y_dest)
     
     if occupied
-      if color != occupied.color occupied.update_attributes(:captured => true)
+      if color != occupied.color
+        occupied.update_attributes(:captured => true)
+      end
     end
   end
 
