@@ -75,6 +75,7 @@ class PieceTest < ActiveSupport::TestCase
     rook = @game.rooks.first
     assert_equal false, rook.valid_move?((rook.x_coord + 2), (rook.y_coord + 3)), 'move on x and y axis'
   end
+<<<<<<< HEAD
 
   test 'bishop move is valid' do
     bishop = @game.bishops.first
@@ -130,6 +131,96 @@ class PieceTest < ActiveSupport::TestCase
   test 'King glyph is king' do
     king = create(:king)
     assert_equal 'king', king.glyph, 'King glyph should be king'
+=======
+  
+  test "king move is valid" do
+    game = create(:game)
+    king = create(:king, :game_id => game.id)
+    
+    assert_equal king.valid_move?(2, 1), true, "King should be able to move 1 space on X axis" 
+    assert_equal king.valid_move?(1, 2), true, "King should be able to move 1 space on Y axis" 
+    assert_equal king.valid_move?(2, 2), true, "King should be able to move 1 space on X and Y axis"
+  end
+  
+  test "king move is not valid" do
+    game = create(:game)
+    king = create(:king, :game_id => game.id)
+    
+    assert_equal king.valid_move?(3, 1), false, "King should not be able to move 2 spaces on X axis" 
+    assert_equal king.valid_move?(1, 3), false, "King should not be able to move 2 spaces on Y axis" 
+    assert_equal king.valid_move?(3, 3), false, "King should not be able to move 2 spaces on X and Y axis"
+  end
+  
+  test "move is on board" do
+    game = create(:game)
+    king = create(:king, :game_id => game.id)
+    
+    assert_equal king.on_board?(7, 7), true, "king should be on board"
+  end
+  
+  test "move is not on board" do
+    game = create(:game)
+    king = create(:king, :game_id => game.id)
+  
+    assert_equal king.on_board?(8, 8), false, "king should not be on board"
+  end
+  
+  test "check king obstruction" do
+    game = create(:game)
+    king = game.pieces.kings.where(:color => 'black').first
+  
+    assert_equal true, king.is_obstructed?(4,1)
+    assert_equal false, king.is_obstructed?(4,4)
+  end
+  
+  test "check pawn obstruction" do
+    game = create(:game)
+    pawn = game.pieces.pawns.where(:x_coord => 0, :y_coord => 1).first
+
+    assert_equal true, pawn.is_obstructed?(0,6)
+    assert_equal false, pawn.is_obstructed?(0,2)
+  end
+  
+  test "check knight obstruction" do
+    game = create(:game)
+    knight = game.pieces.knights.where(:x_coord => 5, :y_coord => 7).first
+
+    assert_equal false, knight.is_obstructed?(0,2)
+  end
+  
+  test "check rook obstruction" do
+    game = create(:game)
+    rook = game.pieces.rooks.where(:x_coord => 0, :y_coord => 0).first
+    assert_equal true, rook.is_obstructed?(0, 1)
+    assert_equal true, rook.is_obstructed?(0, 4)
+  end
+  
+    test "check bishop obstruction" do
+    game = create(:game)
+    bishop = game.pieces.bishops.where(:x_coord => 2, :y_coord => 7).first
+    assert_equal true, bishop.is_obstructed?(3, 1)
+    assert_equal true, bishop.is_obstructed?(6,3)
+  end
+  
+  test "check queen obstruction" do
+    game = create(:game)
+    queen = game.pieces.queens.where(:color => 'black').first
+    queen.update_attributes(:x_coord => 1, :y_coord => 2)
+#x, y >0
+    assert_equal false, queen.is_obstructed?(3,4)
+    assert_equal true, queen.is_obstructed?(6,7)
+#x > 0, y = 0
+    queen.update_attributes(:x_coord => 3, :y_coord => 1)
+    assert_equal false, queen.is_obstructed?(3, 1)
+    queen.update_attributes(:x_coord => 1, :y_coord => 1)
+    assert_equal true, queen.is_obstructed?(2, 1)
+#x > 0, y < 0
+    assert_equal false, queen.is_obstructed?(2, 2)
+#x, y < 0
+    assert_equal false, queen.is_obstructed?(1, 2)
+# x < 0, y = 0    
+    assert_equal false, queen.is_obstructed?(0, 3)
+>>>>>>> 6f5fff71e3c14d5e2a652c24bc74908b919e7f6f
   end
 
 end

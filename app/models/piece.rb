@@ -22,8 +22,14 @@ class Piece < ActiveRecord::Base
   def on_board?(x, y)
     (0..7).include?(x) && (0..7).include?(y)
   end
+<<<<<<< HEAD
 
   def as_json(options = {})
     super(options).merge(:glyph => glyph)
   end
+=======
+  
+
+  
+>>>>>>> 6f5fff71e3c14d5e2a652c24bc74908b919e7f6f
 end
