@@ -58,6 +58,16 @@ class Game < ActiveRecord::Base
     end
   end
 
+  def whos_turn
+    games.each_with_index do |g, index|
+      if index.to_i.even || index.to_i == 0
+        player_turn == 'white'
+      else
+        player_turn == 'black'
+      end
+    end
+  end
+
   def assign_pieces
     pieces.where(:color => 'white').each do |piece|
       piece.update_attributes(:user_id => white_user_id)

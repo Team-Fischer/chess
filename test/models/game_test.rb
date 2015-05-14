@@ -37,7 +37,7 @@ class GameTest < ActiveSupport::TestCase
   test 'White set for starting move' do
     game = create(:game)
     start = game.player_turn
-    assert 'white', 'Setting white as starting move'
+    assert 'black', 'Setting white as starting move'
   end
 
 
