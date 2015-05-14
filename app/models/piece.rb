@@ -20,9 +20,19 @@ class Piece < ActiveRecord::Base
   end
 
   def move_to(x, y)
-    self.update_attributes(:x_coord => x, :y_coord => y, :moved => true)
+    update_attributes(:x_coord => x, :y_coord => y, :moved => true)
   end
-
+  
+  def capture(x, y)
+    game = Game.find(game_id)
+    occupied = game.piece_at(x, y)
+    
+    if occupied
+      if color != occupied.color
+        occupied.update_attributes(:captured => true)
+      end
+    end
+  end
 
   def on_board?(x, y)
     (0..7).include?(x) && (0..7).include?(y)
