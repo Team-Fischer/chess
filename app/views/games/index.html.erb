@@ -5,4 +5,13 @@
       <%= link_to 'Join' , game_path(game), :class => 'btn btn-success', :method => :put %>
       <br>
     <% end %>
-  <% end %>  
+  <% end %>
+
+<div class="text-center">
+  <h3>Users Online</h3>
+  <ul>
+    <% User.online.each do |user| %>
+      <li><%= user.email %></li>
+    <% end %>
+  </ul>
+</div>
