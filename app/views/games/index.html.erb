@@ -1,14 +1,18 @@
-<h2 class="text-center">Join a Game</h2>
+
+<div class="col-xs-6">
+  <h2 class="text-center">Join a Game</h2>
   <% @games.each do |game| %>
     <% unless game.is_full? %>
       <%= User.where(:id => game.white_user_id).first.email %>
       <%= link_to 'Join' , game_path(game), :class => 'btn btn-success', :method => :put %>
-      <br>
+      <br />
+      <br />
     <% end %>
   <% end %>
+</div>
 
-<div class="text-center">
-  <h3>Users Online</h3>
+<div class="col-xs-6">
+  <h2>Users Online</h2>
   <ul>
     <% User.online.each do |user| %>
       <li><%= user.email %></li>
