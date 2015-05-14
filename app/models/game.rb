@@ -86,7 +86,8 @@ class Game < ActiveRecord::Base
 
     pieces.where(:color => color).each do |piece|
       check = true if piece.valid_move?(king_x, king_y)
+      end
+      check
     end
-    check
   end
 end
