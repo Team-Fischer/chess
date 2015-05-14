@@ -37,7 +37,6 @@ class Queen < Piece
     end
 
     @spaces = a.zip(b).to_a
-    puts @spaces.inspect
     @spaces.each do |obs|
     	unless obs[0] == x_coord && obs[1] == y_coord
         	return true if game.piece_at(obs[0], obs[1])
@@ -61,7 +60,6 @@ class Queen < Piece
 		return false
 	end
 
-  end
 
   def obstructed_vert(x_destination, y_destination)
   	game = Game.where(:id => self.game_id).first
@@ -76,8 +74,6 @@ class Queen < Piece
     		end
     	end
     	return false
-    end
+ 	end
+ end
 
-  end
-
-end
