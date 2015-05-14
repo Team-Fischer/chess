@@ -1,4 +1,5 @@
 class Pawn < Piece
+<<<<<<< HEAD
 
   def valid_move?(x_dest, y_dest)
     x_dist = (x_dest - x_coord)

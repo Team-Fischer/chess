@@ -32,7 +32,9 @@ class Game < ActiveRecord::Base
     return @board if @board.present?
     @board = Array.new(8) { Array.new(8) }
     pieces.each do |piece|
-      @board[piece.y_coord][piece.x_coord] = piece
+      unless piece.captured
+        @board[piece.y_coord][piece.x_coord] = piece
+      end
     end
     @board
   end
@@ -43,5 +45,17 @@ class Game < ActiveRecord::Base
   
   def is_full?
     white_user_id && black_user_id
+  end
+
+  def in_check?(color)
+    check = false
+    king = color == 'white' ? kings.where(:color => 'black').first : kings.where(:color => 'white').first
+    king_x = king.x_coord
+    king_y = king.y_coord
+
+    pieces.where(:color => color).each do |piece|
+      check = true if piece.valid_move?(king_x, king_y)
+    end
+    check
   end
 end

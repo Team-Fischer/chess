@@ -34,6 +34,25 @@ class GameTest < ActiveSupport::TestCase
     refute game.piece_at(4,4)
   end
 
+  test 'should not be in check' do
+    game = create(:game)
 
+    refute game.in_check?('black')
+  end
 
+  test 'should be in check' do
+    game = create(:game)
+    queen = game.queens.where(:color => 'black').first
+    white_pawn1 = game.pawns.where(:color => 'white', :x_coord => 5).first
+    white_pawn2 = game.pawns.where(:color => 'white', :x_coord => 6).first
+    black_pawn = game.pawns.where(:color => 'black', :x_coord => 4).first
+
+    # move pieces to 'fools mate' locations - http://en.wikipedia.org/wiki/Fool%27s_mate
+    white_pawn1.move_to(5, 5)
+    black_pawn.move_to(4, 3)
+    white_pawn2.move_to(6, 4)
+    queen.move_to(7, 4)
+
+    assert game.in_check?('black')
+  end
 end
