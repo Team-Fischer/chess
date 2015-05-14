@@ -8,22 +8,22 @@ class Game < ActiveRecord::Base
   def populate_board
     %w(black white).each do |color|
       if color == 'black'
-        x_pawns = 1
-        x_others = 0
+        y_pawns = 1
+        y_others = 0
       else
-        x_pawns = 6
-        x_others = 7
+        y_pawns = 6
+        y_others = 7
       end
-      rooks.create(color: color, x_coord: x_others, y_coord: 0)
-      knights.create(color: color, x_coord: x_others, y_coord: 1)
-      bishops.create(color: color, x_coord: x_others, y_coord: 2)
-      queens.create(color: color, x_coord: x_others, y_coord: 3)
-      kings.create(color: color, x_coord: x_others, y_coord: 4)
-      bishops.create(color: color, x_coord: x_others, y_coord: 5)
-      knights.create(color: color, x_coord: x_others, y_coord: 6)
-      rooks.create(color: color, x_coord: x_others, y_coord: 7)
+      rooks.create(color: color, x_coord: 0, y_coord: y_others)
+      knights.create(color: color, x_coord: 1, y_coord: y_others)
+      bishops.create(color: color, x_coord: 2, y_coord: y_others)
+      queens.create(color: color, x_coord: 3, y_coord: y_others)
+      kings.create(color: color, x_coord: 4, y_coord: y_others)
+      bishops.create(color: color, x_coord: 5, y_coord: y_others)
+      knights.create(color: color, x_coord: 6, y_coord: y_others)
+      rooks.create(color: color, x_coord: 7, y_coord: y_others)
       8.times do |counter|
-        pawns.create(color: color, x_coord: x_pawns, y_coord: counter)
+        pawns.create(color: color, x_coord: counter, y_coord: y_pawns)
       end
     end
   end

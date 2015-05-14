@@ -1,12 +1,16 @@
 class Pawn < Piece
-<<<<<<< HEAD
-
   def valid_move?(x_dest, y_dest)
     x_dist = (x_dest - x_coord)
     y_dist = (y_dest - y_coord)
 
-    if x_dist == -1 && y_dist == -1 && game.piece_at(x_dest, y_dest)
-      
+    # did this as elsif because the line would be too long with ||
+    if x_dist.abs == 1 && y_dist == -1 && game.piece_at(x_dest, y_dest)
+      Piece.capture(x_dest, y_dest)
+      return true
+    elsif x_dist.abs == 1 && y_dist == 1 && game.piece_at(x_dest, y_dest)
+      Piece.capture(x_dest, y_dest)
+      return true
+    end
 
     if color == 'white'
       if moved
@@ -21,8 +25,5 @@ class Pawn < Piece
        return (y_dist == 1 || y_dist == 2) && x_dist == 0
       end
     end
-   
-#   game.piece_at(x_destination, y_destination) && color != game.piece_at(x_destination, y_destination).color
-
   end
 end
