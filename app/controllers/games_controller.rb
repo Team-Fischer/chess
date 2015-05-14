@@ -5,10 +5,6 @@ class GamesController < ApplicationController
     @games = Game.all
   end
   
-  def new
-    @game = Game.new
-  end
-
   def show
     @game = Game.where(:id => params[:id]).first
     render :text => 'That game does not exist.', :status => :not_found if @game.blank?
