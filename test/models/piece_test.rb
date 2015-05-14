@@ -151,4 +151,13 @@ class PieceTest < ActiveSupport::TestCase
     assert_equal 1, king.y_coord, 'King should be able to move forward up and down'
   end
 
+  test 'Queen obstructed piece' do
+    queen = @game.queens.first
+    queen.update_attributes(x_coord: 3, y_coord: 3)
+
+    refute queen.obstructed_piece?(4, 4)
+    assert queen.obstructed_piece?(3, 0)
+
+  end
+
 end
