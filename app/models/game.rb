@@ -56,4 +56,34 @@ class Game < ActiveRecord::Base
     end
     checking_pieces.length > 0 ? checking_pieces : false
   end
+
+  def can_move_from_check?(color)
+    mods = [-1, 0, 1]
+    king = kings.where("not color = '#{color}'").first
+    potential_moves = mods.map { |x| mods.map { |y| [king.x_coord + x, king.y_coord + y] } }.flatten(1)
+
+  end
+
+  def is_checkmate?(color)
+    # below doesn't account for stalemate
+    # return false unless in check since no check means no checkmate
+    unless in_check?(color)
+      return false
+    end
+
+    # since king is in check, test methods for getting out of check
+    if can_move_from_check?(color)
+    # if any valid move for king can get out of check (can't castle)
+      false
+    elsif can_capture_from_check?(color)
+    # elsif any king color piece has valid move to capture all checking piece(s)
+      false
+    elsif can_obstruct_from_check?(color)
+    # elsif any king color piece has valid move to obstruct all checking piece(s)
+      false
+    else
+      # return true, game over man!
+      true
+    end
+  end
 end
