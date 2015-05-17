@@ -1,5 +1,6 @@
 class Game < ActiveRecord::Base
   after_create :populate_board
+  after_create :first_move
 
   has_many :users
   has_many :pieces, :dependent => :destroy
@@ -32,7 +33,9 @@ class Game < ActiveRecord::Base
     return @board if @board.present?
     @board = Array.new(8) { Array.new(8) }
     pieces.each do |piece|
-      @board[piece.y_coord][piece.x_coord] = piece
+      unless piece.captured
+        @board[piece.y_coord][piece.x_coord] = piece
+      end
     end
     @board
   end
@@ -44,4 +47,54 @@ class Game < ActiveRecord::Base
   def is_full?
     white_user_id && black_user_id
   end
+
+  def first_move
+    self.update_attributes(:player_turn => 'white')
+  end
+
+  ##TODO Need to fix this.
+  def next_turn
+    if self.moves == 0 || self.moves % 2 == 0 
+      self.update_attributes(:player_turn => 'white')
+      return black_user_id.freeze
+    else
+      self.update_attributes(:player_turn => 'black')
+      return white_user_id.freeze
+    end
+  end
+
+  ##TODO Throwing infinite loop error
+  def moves
+    until pieces == 0
+      @count = 0
+      if player_turn = 'white'
+        @count =+ 1
+      else
+        @count =+ 1
+      end
+    end
+    count.to_i
+  end
+
+  def assign_pieces
+    pieces.where(:color => 'white').each do |piece|
+      piece.update_attributes(:user_id => white_user_id)
+    end
+    pieces.where(:color => 'black').each do |piece|
+      piece.update_attributes(:user_id => black_user_id)
+    end
+  end
+
+  def in_check?(color)
+    check = false
+    king = color == 'white' ? kings.where(:color => 'black').first : kings.where(:color => 'white').first
+    king_x = king.x_coord
+    king_y = king.y_coord
+
+    pieces.where(:color => color).each do |piece|
+      check = true if piece.valid_move?(king_x, king_y)
+      end
+      check
+    end
+ 
 end

@@ -5,10 +5,6 @@ class GamesController < ApplicationController
     @games = Game.all
   end
   
-  def new
-    @game = Game.new
-  end
-
   def show
     @game = Game.where(:id => params[:id]).first
     render :text => 'That game does not exist.', :status => :not_found if @game.blank?
@@ -26,8 +22,10 @@ class GamesController < ApplicationController
       redirect_to games_path
     else
       @game.update_attributes(:black_user_id => current_user.id)
+      @game.assign_pieces
       redirect_to game_path(@game)
     end
+    @game.next_turn
   end
 
   private

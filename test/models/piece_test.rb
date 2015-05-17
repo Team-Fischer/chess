@@ -98,6 +98,18 @@ class PieceTest < ActiveSupport::TestCase
     refute knight.valid_move?((knight.x_coord + 0), knight.y_coord + 2), 'knight should not be able to move directly horizontally/vertically'
   end
 
+  test 'queen move is valid' do
+    queen = @game.queens.first
+    assert queen.valid_move?((queen.x_coord + 1), (queen.y_coord + 1)), 'queen move diagonal'
+    assert queen.valid_move?((queen.x_coord + 3), queen.y_coord), 'queen move horizontal'
+    assert queen.valid_move?(queen.x_coord, (queen.y_coord + 2)), 'queen move vertical'
+  end
+
+  test 'queen move is not valid' do
+    queen = @game.queens.first
+    refute queen.valid_move?((queen.x_coord + 1), (queen.y_coord + 2)), "queen can't move like knight"
+  end
+
   test 'pawn move is valid' do
     pawn = @game.pawns.first
     assert pawn.valid_move?(pawn.x_coord, (pawn.y_coord + 2))
@@ -112,6 +124,23 @@ class PieceTest < ActiveSupport::TestCase
     refute pawn.valid_move?(pawn.x_coord, (pawn.y_coord + 2))
   end
 
+  test 'pawn back move is invalid' do
+    pawn = @game.pawns.first
+    pawn.moved = true
+    refute pawn.valid_move?(pawn.x_coord, (pawn.y_coord - 1))
+    pawn.moved = true
+    refute pawn.valid_move?(pawn.x_coord, (pawn.y_coord - 2))
+  end
+
+  test 'pawn capture diagonal' do
+    black_pawn = @game.pawns.where(:color => 'black', :x_coord => 0).first
+    white_pawn = @game.pawns.where(:color => 'white', :x_coord => 1).first
+    
+    assert black_pawn.move_to(black_pawn.y_coord + 2, black_pawn.x_coord)
+    assert white_pawn.move_to(white_pawn.y_coord - 2, white_pawn.x_coord)
+    assert black_pawn.move_to((black_pawn.y_coord + 1), (black_pawn.x_coord + 1))
+  end
+  
   test 'move is on board' do
     king = @game.kings.first
     assert_equal king.on_board?(7, 7), true, 'king should be on board'

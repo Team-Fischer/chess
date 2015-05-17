@@ -1,7 +1,5 @@
 <h1 class='text-center'>Have Fun</h1>
 
-<p id='piece-warning'></p>
-
 <!-- drawing chess board -->
 <table class='chess-board chess-squares' data-game='<%= @game.id %>' id='board'>
   <% 8.times do |row| %>
@@ -14,6 +12,8 @@
     </tr>
   <% end %>
 </table>
+
+<p id='piece-warning'></p>
 
 <script>
   $(document).ready(function(){
