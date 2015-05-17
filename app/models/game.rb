@@ -48,14 +48,12 @@ class Game < ActiveRecord::Base
   end
 
   def in_check?(color)
-    check = false
-    king = color == 'white' ? kings.where(:color => 'black').first : kings.where(:color => 'white').first
-    king_x = king.x_coord
-    king_y = king.y_coord
+    checking_pieces = []
+    king = kings.where(:color => color).first
 
-    pieces.where(:color => color).each do |piece|
-      check = true if piece.valid_move?(king_x, king_y)
+    pieces.where("not color = '#{color}'").each do |piece|
+      checking_pieces << piece if piece.valid_move?(king.x_coord, king.y_coord)
     end
-    check
+    checking_pieces.length > 0 ? checking_pieces : false
   end
 end

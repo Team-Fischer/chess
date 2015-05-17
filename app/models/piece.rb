@@ -19,6 +19,10 @@ class Piece < ActiveRecord::Base
     self.type.downcase
   end
 
+  def opposite
+    color == 'white' ? 'black' : 'white'
+  end
+
   def move_to(x, y)
     update_attributes(:x_coord => x, :y_coord => y, :moved => true)
   end
