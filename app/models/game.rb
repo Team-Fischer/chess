@@ -54,8 +54,7 @@ class Game < ActiveRecord::Base
 
   ##TODO Need to fix this.
   def next_turn
-   counter = Game.count.to_i
-    if counter == 0 || counter % 2 == 0 
+    if self.moves == 0 || self.moves % 2 == 0 
       self.update_attributes(:player_turn => 'white')
       return black_user_id.freeze
     else
@@ -64,11 +63,18 @@ class Game < ActiveRecord::Base
     end
   end
 
+  ##TODO Throwing infinite loop error
   def moves
-    
+    until pieces == 0
+      @count = 0
+      if player_turn = 'white'
+        @count =+ 1
+      else
+        @count =+ 1
+      end
+    end
+    count.to_i
   end
-
-
 
   def assign_pieces
     pieces.where(:color => 'white').each do |piece|
