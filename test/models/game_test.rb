@@ -37,7 +37,7 @@ class GameTest < ActiveSupport::TestCase
   test 'White set for starting move' do
     game = create(:game)
     start = game.player_turn
-    assert 'black', 'Setting white as starting move'
+    assert_equal 'white', start
   end
 
   test 'should not be in check' do
@@ -61,4 +61,14 @@ class GameTest < ActiveSupport::TestCase
 
     assert game.in_check?('black'), 'black is in check'
   end
+
+   test 'count turns' do 
+     game = create(:game)
+     queen = game.queens.where(:color => 'black').first
+     queen.move_to(7, 4)
+     assert_equal game.moves.count, 1
+     queen.move_to(8, 4)
+     assert_equal game.moves.count, 2
+   end
+
 end

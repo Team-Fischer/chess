@@ -52,23 +52,23 @@ class Game < ActiveRecord::Base
     self.update_attributes(:player_turn => 'white')
   end
 
+  ##TODO Need to fix this.
   def next_turn
-    if self.player_turn == 'white'
-      self.update_attributes(:player_turn => 'black')
-    else
+   counter = Game.count.to_i
+    if counter == 0 || counter % 2 == 0 
       self.update_attributes(:player_turn => 'white')
+      return black_user_id.freeze
+    else
+      self.update_attributes(:player_turn => 'black')
+      return white_user_id.freeze
     end
   end
 
-  def whos_turn
-    games.each_with_index do |g, index|
-      if index.to_i.even || index.to_i == 0
-        player_turn == 'white'
-      else
-        player_turn == 'black'
-      end
-    end
+  def moves
+    
   end
+
+
 
   def assign_pieces
     pieces.where(:color => 'white').each do |piece|
@@ -77,6 +77,7 @@ class Game < ActiveRecord::Base
     pieces.where(:color => 'black').each do |piece|
       piece.update_attributes(:user_id => black_user_id)
     end
+  end
 
   def in_check?(color)
     check = false
@@ -89,5 +90,5 @@ class Game < ActiveRecord::Base
       end
       check
     end
-  end
+ 
 end

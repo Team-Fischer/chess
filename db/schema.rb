@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20150513031218) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "moved",      default: false
-    t.boolean  "captured",   default: false
     t.integer  "user_id"
+    t.boolean  "captured",   default: false
   end
 
   create_table "users", force: true do |t|
