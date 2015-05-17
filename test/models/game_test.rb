@@ -69,7 +69,7 @@ class GameTest < ActiveSupport::TestCase
     white_pawn2.move_to(6, 4)
     queen.move_to(7, 4)
 
-    refute game.can_move_from_check?('black'), "king cannot uncheck"
+    refute game.can_move_from_check?('white'), "king cannot uncheck"
   end
 
   test 'can move from check' do
@@ -87,7 +87,7 @@ class GameTest < ActiveSupport::TestCase
     queen.move_to(7, 4)
     white_pawn3.move_to(4, 4)
 
-    assert game.can_move_from_check?('black'), 'king can uncheck'
+    assert game.can_move_from_check?('white'), 'king can uncheck'
   end
 
   test 'cannot capture from check' do
@@ -106,9 +106,9 @@ class GameTest < ActiveSupport::TestCase
     game.rooks.where(:color => 'white', :x_coord => 7).first.destroy
     game.pawns.where(:color => 'white', :x_coord => 7).first.destroy
     # need list of checking pieces
-    check_pieces = game.in_check?('black')
+    check_pieces = game.in_check?('white')
 
-    refute game.can_capture_from_check?('black', check_pieces), "king cannot uncheck"
+    refute game.can_capture_from_check?('white', check_pieces), "king cannot uncheck"
   end
 
   test 'can capture from check' do
@@ -126,8 +126,8 @@ class GameTest < ActiveSupport::TestCase
     # destroy this for simpler test
     game.pawns.where(:color => 'white', :x_coord => 7).first.destroy
     # need list of checking pieces
-    check_pieces = game.in_check?('black')
+    check_pieces = game.in_check?('white')
 
-    assert game.can_capture_from_check?('black', check_pieces), "king can uncheck"
+    assert game.can_capture_from_check?('white', check_pieces), "king can uncheck"
   end
 end

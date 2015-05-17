@@ -60,8 +60,8 @@ class Game < ActiveRecord::Base
   def can_move_from_check?(color)
     still_check = []
     mods = [-1, 0, 1]
-    king = kings.where("not color = '#{color}'").first
-    attackers = pieces.where(:color => color)
+    king = kings.where(:color => color).first
+    attackers = pieces.where("not color = '#{color}'")
     # find all squares around king then remove those that aren't on the board
     potential_moves = mods.map { |x| mods.map { |y| [king.x_coord + x, king.y_coord + y] } }.flatten(1)
     potential_moves.delete_if { |move| !((0..7).include?(move[0]) && (0..7).include?(move[1])) }
@@ -80,7 +80,7 @@ class Game < ActiveRecord::Base
   def can_capture_from_check?(color, checking_pieces)
     # only need to check for capture if 1 checking_piece, can't capture more than 1 piece per turn
     if checking_pieces.length == 1
-      pieces.where("not color = '#{color}'").each do |piece|
+      pieces.where(:color => color).each do |piece|
         return true if piece.valid_move?(checking_pieces[0].x_coord, checking_pieces[0].y_coord)
       end
     end
