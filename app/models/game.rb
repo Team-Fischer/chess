@@ -58,10 +58,31 @@ class Game < ActiveRecord::Base
   end
 
   def can_move_from_check?(color)
+    still_check = []
     mods = [-1, 0, 1]
     king = kings.where("not color = '#{color}'").first
+    attackers = pieces.where(:color => color)
+    # find all squares around king then remove those that are off the board
     potential_moves = mods.map { |x| mods.map { |y| [king.x_coord + x, king.y_coord + y] } }.flatten(1)
+    potential_moves.delete_if { |move| !((0..7).include?(move[0]) && (0..7).include?(move[1])) }
+    # go thru all escapes and see if any are not in check
+    potential_moves.each do |move|
+      attackers.each do |piece|
+        if piece.valid_move?(move[0], move[1]) || piece_at(move[0], move[1])
+          # if a valid move to this square add to still in check array
+          still_check << move unless still_check.include?(move)
+        end
+      end
+    end
+    still_check.length == potential_moves.length ? false : true
+  end
 
+  def can_capture_from_check?(color)
+    false
+  end
+
+  def can_obstruct_from_check?(color)
+    false
   end
 
   def is_checkmate?(color)
