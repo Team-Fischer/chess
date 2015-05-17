@@ -37,7 +37,7 @@ class GameTest < ActiveSupport::TestCase
   test 'should not be in check' do
     game = create(:game)
 
-    refute game.in_check?('black')
+    refute game.in_check?('white')
   end
 
   test 'should be in check' do
@@ -53,6 +53,6 @@ class GameTest < ActiveSupport::TestCase
     white_pawn2.move_to(6, 4)
     queen.move_to(7, 4)
 
-    assert game.in_check?('black')
+    assert game.in_check?('white')
   end
 end
