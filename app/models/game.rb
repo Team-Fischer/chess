@@ -62,7 +62,7 @@ class Game < ActiveRecord::Base
     mods = [-1, 0, 1]
     king = kings.where("not color = '#{color}'").first
     attackers = pieces.where(:color => color)
-    # find all squares around king then remove those that are off the board
+    # find all squares around king then remove those that aren't on the board
     potential_moves = mods.map { |x| mods.map { |y| [king.x_coord + x, king.y_coord + y] } }.flatten(1)
     potential_moves.delete_if { |move| !((0..7).include?(move[0]) && (0..7).include?(move[1])) }
     # go thru all escapes and see if any are not in check
@@ -77,7 +77,13 @@ class Game < ActiveRecord::Base
     still_check.length == potential_moves.length ? false : true
   end
 
-  def can_capture_from_check?(color)
+  def can_capture_from_check?(color, checking_pieces)
+    # only need to check for capture if 1 checking_piece, can't capture more than 1 piece per turn
+    if checking_pieces.length == 1
+      pieces.where("not color = '#{color}'").each do |piece|
+        return true if piece.valid_move?(checking_pieces[0].x_coord, checking_pieces[0].y_coord)
+      end
+    end
     false
   end
 
@@ -86,9 +92,10 @@ class Game < ActiveRecord::Base
   end
 
   def is_checkmate?(color)
-    # below doesn't account for stalemate
+    # logic in this method doesn't account for stalemate
+    checking_pieces = in_check?(color)
     # return false unless in check since no check means no checkmate
-    unless in_check?(color)
+    unless checking_pieces
       return false
     end
 
@@ -96,7 +103,7 @@ class Game < ActiveRecord::Base
     if can_move_from_check?(color)
     # if any valid move for king can get out of check (can't castle)
       false
-    elsif can_capture_from_check?(color)
+    elsif can_capture_from_check?(color, checking_pieces)
     # elsif any king color piece has valid move to capture all checking piece(s)
       false
     elsif can_obstruct_from_check?(color)
