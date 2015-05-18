@@ -49,7 +49,7 @@ class Game < ActiveRecord::Base
 
   def in_check?(color)
     checking_pieces = []
-    king = kings.find_by_color(:color)
+    king = kings.find_by_color(color)
 
     pieces.where("not color = '#{color}'").each do |piece|
       checking_pieces << piece if piece.valid_move?(king.x_coord, king.y_coord)
@@ -60,11 +60,12 @@ class Game < ActiveRecord::Base
   def can_move_from_check?(color)
     still_check = []
     mods = [-1, 0, 1]
-    king = kings.find_by_color(:color)
+    king = kings.find_by_color(color)
     attackers = pieces.where("not color = '#{color}'")
     # find all squares around king then remove those that aren't on the board
     potential_moves = mods.map { |x| mods.map { |y| [king.x_coord + x, king.y_coord + y] } }.flatten(1)
     potential_moves.delete_if { |move| !((0..7).include?(move[0]) && (0..7).include?(move[1])) }
+    potential_moves.delete_if { |move| piece_at(move[0], move[1]) }
     # go thru all escapes and see if any are not in check
     potential_moves.each do |move|
       attackers.each do |piece|
@@ -87,7 +88,35 @@ class Game < ActiveRecord::Base
     false
   end
 
-  def can_obstruct_from_check?(color)
+  def can_obstruct_from_check?(color, checking_pieces)
+    defenders = pieces.where(:color => color)
+    king = kings.find_by_color(color)
+    checking_pieces.each do |piece|
+      unless piece.type == 'Knight'
+        x_path = piece.x_coord < king.x_coord ? (piece.x_coord..king.x_coord).to_a : (king.x_coord..piece.x_coord).to_a.reverse
+        y_path = piece.y_coord < king.y_coord ? (piece.y_coord..king.y_coord).to_a : (king.y_coord..piece.y_coord).to_a.reverse
+        if x_path.length == y_path.length
+          # diagonal
+          path = x_path.zip(y_path)
+        elsif x_path.length == 0
+          # vertical
+          path = y_path.map { |y| [piece.x_coord, y] }
+        else
+          # horizontal
+          path = x_path.map { |x| [x, piece.y_coord] }
+        end
+        # delete king and attacking piece squares from path
+        path.delete_if { |square| square == [king.x_coord, king.y_coord] || square == [piece.x_coord, piece.y_coord]}
+        # check for valid_move? to any square in path
+        defenders.each do |defender|
+          path.each do |square|
+            if defender.valid_move?(square[0], square[1])
+              return true unless defender.type == 'King'
+            end
+          end
+        end
+      end
+    end
     false
   end
 
@@ -106,7 +135,7 @@ class Game < ActiveRecord::Base
     elsif can_capture_from_check?(color, checking_pieces)
     # elsif any king color piece has valid move to capture all checking piece(s)
       false
-    elsif can_obstruct_from_check?(color)
+    elsif can_obstruct_from_check?(color, checking_pieces)
     # elsif any king color piece has valid move to obstruct all checking piece(s)
       false
     else
