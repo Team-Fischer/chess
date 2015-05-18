@@ -49,7 +49,7 @@ class Game < ActiveRecord::Base
 
   def in_check?(color)
     checking_pieces = []
-    king = kings.where(:color => color).first
+    king = kings.find_by_color(:color)
 
     pieces.where("not color = '#{color}'").each do |piece|
       checking_pieces << piece if piece.valid_move?(king.x_coord, king.y_coord)
@@ -60,7 +60,7 @@ class Game < ActiveRecord::Base
   def can_move_from_check?(color)
     still_check = []
     mods = [-1, 0, 1]
-    king = kings.where(:color => color).first
+    king = kings.find_by_color(:color)
     attackers = pieces.where("not color = '#{color}'")
     # find all squares around king then remove those that aren't on the board
     potential_moves = mods.map { |x| mods.map { |y| [king.x_coord + x, king.y_coord + y] } }.flatten(1)
