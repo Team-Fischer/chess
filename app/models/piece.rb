@@ -44,6 +44,7 @@ class Piece < ActiveRecord::Base
   def as_json(options = {})
     super(options).merge(:glyph => glyph)
   end
+
   def obstructed_piece?(x_destination, y_destination)
     x_dist = (x_coord - x_destination).abs
     y_dist = (y_coord - y_destination).abs    
