@@ -56,7 +56,6 @@ class Piece < ActiveRecord::Base
     else 
       obstructed_vert(x_destination, y_destination)
     end
-
   end
 
   def obstructed_diagonal(x_destination, y_destination)

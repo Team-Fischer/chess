@@ -77,14 +77,21 @@ class PieceTest < ActiveSupport::TestCase
   end
 
   test 'bishop move is valid' do
-    bishop = @game.bishops.first
+    bishop = @game.bishops.where(:color => 'black', :x_coord => 2).first
+    # remove obstructing pawn
+    @game.pawns.where(:color => 'black', :x_coord => 3).first.destroy
     assert bishop.valid_move?((bishop.x_coord + 2), bishop.y_coord + 2), 'move is diag'
   end
 
   test 'bishop move is not valid' do
     bishop = @game.bishops.first
     refute bishop.valid_move?(bishop.x_coord, (bishop.y_coord + 3)), 'move on x axis'
-  end  
+  end
+
+  test 'bishop move is obstructed' do
+    bishop = @game.bishops.first
+    refute bishop.valid_move?(bishop.x_coord + 2, (bishop.y_coord + 2)), 'move on x axis'
+  end
 
   test 'knight move is valid' do
     knight = @game.knights.first
