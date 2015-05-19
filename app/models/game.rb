@@ -51,25 +51,25 @@ class Game < ActiveRecord::Base
     checking_pieces = []
     king = kings.find_by_color(color)
 
-    pieces.where("not color = '#{color}'").each do |piece|
+    pieces.where("not color = ?", color).each do |piece|
       checking_pieces << piece if piece.valid_move?(king.x_coord, king.y_coord)
     end
     checking_pieces.length > 0 ? checking_pieces : false
   end
 
   def can_move_from_check?(color)
-    still_check = []
     mods = [-1, 0, 1]
     king = kings.find_by_color(color)
-    attackers = pieces.where("not color = '#{color}'")
+    attackers = pieces.where("not color = ?", color)
     # find all squares around king then remove those that aren't on the board
     potential_moves = mods.map { |x| mods.map { |y| [king.x_coord + x, king.y_coord + y] } }.flatten(1)
     potential_moves.delete_if { |move| !((0..7).include?(move[0]) && (0..7).include?(move[1])) }
     potential_moves.delete_if { |move| piece_at(move[0], move[1]) }
+    still_check = []
     # go thru all escapes and see if any are not in check
     potential_moves.each do |move|
       attackers.each do |piece|
-        if piece.valid_move?(move[0], move[1]) || piece_at(move[0], move[1])
+        if piece.valid_move?(move[0], move[1])
           # if a valid move to this square add to still in check array
           still_check << move unless still_check.include?(move)
         end
@@ -93,8 +93,10 @@ class Game < ActiveRecord::Base
     king = kings.find_by_color(color)
     checking_pieces.each do |piece|
       unless piece.type == 'Knight'
-        x_path = piece.x_coord < king.x_coord ? (piece.x_coord..king.x_coord).to_a : (king.x_coord..piece.x_coord).to_a.reverse
-        y_path = piece.y_coord < king.y_coord ? (piece.y_coord..king.y_coord).to_a : (king.y_coord..piece.y_coord).to_a.reverse
+        x_path = piece.x_coord < king.x_coord ? (piece.x_coord..king.x_coord).to_a
+                 : (king.x_coord..piece.x_coord).to_a.reverse
+        y_path = piece.y_coord < king.y_coord ? (piece.y_coord..king.y_coord).to_a
+                 : (king.y_coord..piece.y_coord).to_a.reverse
         if x_path.length == y_path.length
           # diagonal
           path = x_path.zip(y_path)
