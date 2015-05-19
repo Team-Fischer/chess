@@ -4,6 +4,6 @@ class King < Piece
 
     valid_moves = [[1,1],[1,0],[0,1]]
 
-    valid_moves.include?(move)
+    valid_moves.include?(move) && !obstructed_piece?(x_destination, y_destination)
   end
 end
