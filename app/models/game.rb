@@ -42,18 +42,107 @@ class Game < ActiveRecord::Base
   def piece_at(x, y)
     board_state[y][x]
   end
-  
+
   def is_full?
     white_user_id && black_user_id
   end
 
   def in_check?(color)
     checking_pieces = []
-    king = kings.where(:color => color).first
+    king = kings.find_by_color(color)
 
-    pieces.where("not color = '#{color}'").each do |piece|
+    pieces.where("not color = ?", color).each do |piece|
       checking_pieces << piece if piece.valid_move?(king.x_coord, king.y_coord)
     end
     checking_pieces.length > 0 ? checking_pieces : false
+  end
+
+  def can_move_from_check?(color)
+    mods = [-1, 0, 1]
+    king = kings.find_by_color(color)
+    attackers = pieces.where("not color = ?", color)
+    # find all squares around king then remove those that aren't on the board
+    potential_moves = mods.map { |x| mods.map { |y| [king.x_coord + x, king.y_coord + y] } }.flatten(1)
+    potential_moves.delete_if { |move| !((0..7).include?(move[0]) && (0..7).include?(move[1])) }
+    potential_moves.delete_if { |move| piece_at(move[0], move[1]) }
+    still_check = []
+    # go thru all escapes and see if any are not in check
+    potential_moves.each do |move|
+      attackers.each do |piece|
+        if piece.valid_move?(move[0], move[1])
+          # if a valid move to this square add to still in check array
+          still_check << move unless still_check.include?(move)
+        end
+      end
+    end
+    still_check.length == potential_moves.length ? false : true
+  end
+
+  def can_capture_from_check?(color, checking_pieces)
+    # only need to check for capture if 1 checking_piece, can't capture more than 1 piece per turn
+    if checking_pieces.length == 1
+      pieces.where(:color => color).each do |piece|
+        return true if piece.valid_move?(checking_pieces[0].x_coord, checking_pieces[0].y_coord)
+      end
+    end
+    false
+  end
+
+  def can_obstruct_from_check?(color, checking_pieces)
+    defenders = pieces.where(:color => color)
+    king = kings.find_by_color(color)
+    checking_pieces.each do |piece|
+      unless piece.type == 'Knight'
+        x_path = piece.x_coord < king.x_coord ? (piece.x_coord..king.x_coord).to_a
+                 : (king.x_coord..piece.x_coord).to_a.reverse
+        y_path = piece.y_coord < king.y_coord ? (piece.y_coord..king.y_coord).to_a
+                 : (king.y_coord..piece.y_coord).to_a.reverse
+        if x_path.length == y_path.length
+          # diagonal
+          path = x_path.zip(y_path)
+        elsif x_path.length == 0
+          # vertical
+          path = y_path.map { |y| [piece.x_coord, y] }
+        else
+          # horizontal
+          path = x_path.map { |x| [x, piece.y_coord] }
+        end
+        # delete king and attacking piece squares from path
+        path.delete_if { |square| square == [king.x_coord, king.y_coord] || square == [piece.x_coord, piece.y_coord]}
+        # check for valid_move? to any square in path
+        defenders.each do |defender|
+          path.each do |square|
+            if defender.valid_move?(square[0], square[1])
+              return true unless defender.type == 'King'
+            end
+          end
+        end
+      end
+    end
+    false
+  end
+
+  def is_checkmate?(color)
+    # logic in this method doesn't account for stalemate
+    checking_pieces = in_check?(color)
+    # return false unless in check since no check means no checkmate
+    unless checking_pieces
+      return false
+    end
+
+    # since king is in check, test methods for getting out of check
+    if can_move_from_check?(color)
+    # if any valid move for king can get out of check (can't castle)
+      false
+    elsif can_capture_from_check?(color, checking_pieces)
+    # elsif any king color piece has valid move to capture all checking piece(s)
+      false
+    elsif can_obstruct_from_check?(color, checking_pieces)
+    # elsif any king color piece has valid move to obstruct all checking piece(s)
+      false
+    else
+      # return true, game over man!
+      true
+    end
   end
 end

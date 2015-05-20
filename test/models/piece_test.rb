@@ -52,7 +52,12 @@ class PieceTest < ActiveSupport::TestCase
   end
 
   test 'king move is valid' do
-    king = @game.kings.first
+    color = 'black'
+    king = @game.kings.find_by_color(color)
+    # remove pieces that are obstructions
+    @game.pieces.where(:color => color, :x_coord => 5).destroy_all
+    @game.pawns.where(:color => color, :x_coord => 4).destroy_all
+
     assert king.valid_move?((king.x_coord + 1), king.y_coord), '1 space on X axis'
     assert king.valid_move?(king.x_coord, (king.y_coord + 1)), '1 space on Y axis'
     assert king.valid_move?((king.x_coord + 1), (king.y_coord + 1)), '1 space on X and Y axis'
@@ -63,6 +68,13 @@ class PieceTest < ActiveSupport::TestCase
     refute king.valid_move?((king.x_coord + 2), king.y_coord), '2 spaces on X axis'
     refute king.valid_move?(king.x_coord, (king.y_coord + 2)), '2 spaces on Y axis'
     refute king.valid_move?((king.x_coord + 2), (king.y_coord + 2)), '2 spaces on X and Y axis'
+  end
+
+  test 'king move is obstructed' do
+    king = @game.kings.first
+    refute king.valid_move?((king.x_coord + 1), king.y_coord), '1 spaces on X axis'
+    refute king.valid_move?(king.x_coord, (king.y_coord + 1)), '1 spaces on Y axis'
+    refute king.valid_move?((king.x_coord + 1), (king.y_coord + 1)), '1 spaces on X and Y axis'
   end
 
   test 'rook move is valid' do
@@ -77,14 +89,21 @@ class PieceTest < ActiveSupport::TestCase
   end
 
   test 'bishop move is valid' do
-    bishop = @game.bishops.first
+    bishop = @game.bishops.where(:color => 'black', :x_coord => 2).first
+    # remove obstructing pawn
+    @game.pawns.where(:color => 'black', :x_coord => 3).destroy_all
     assert bishop.valid_move?((bishop.x_coord + 2), bishop.y_coord + 2), 'move is diag'
   end
 
   test 'bishop move is not valid' do
     bishop = @game.bishops.first
     refute bishop.valid_move?(bishop.x_coord, (bishop.y_coord + 3)), 'move on x axis'
-  end  
+  end
+
+  test 'bishop move is obstructed' do
+    bishop = @game.bishops.first
+    refute bishop.valid_move?(bishop.x_coord + 2, (bishop.y_coord + 2)), 'move on x axis'
+  end
 
   test 'knight move is valid' do
     knight = @game.knights.first
