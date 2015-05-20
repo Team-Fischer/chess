@@ -1,9 +1,9 @@
 class Bishop < Piece
- def valid_move?(x_destination, y_destination)
-  x_dist = (x_coord - x_destination).abs
-  y_dist = (y_coord - y_destination).abs
+  def valid_move?(x_destination, y_destination)
+   x_dist = (x_coord - x_destination).abs
+   y_dist = (y_coord - y_destination).abs
 
-  # move must be diag 
-  (x_dist == y_dist)
- end
+   # move must be diag
+   (x_dist == y_dist) && !obstructed_piece?(x_destination, y_destination)
+  end
 end

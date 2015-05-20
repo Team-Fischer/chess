@@ -6,4 +6,7 @@ class Queen < Piece
     # can move vertical, horizontal or diagonal
     (x_dist == y_dist) || ((x_dist == 0 || y_dist == 0) && (x_dist > 0 || y_dist > 0))
   end
-end
+
+
+ end
+
