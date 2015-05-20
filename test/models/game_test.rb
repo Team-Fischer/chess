@@ -67,7 +67,7 @@ class GameTest < ActiveSupport::TestCase
      queen = game.queens.where(:color => 'black').first
      queen.move_to(7, 4)
      assert_equal game.moves.count, 1
-     queen.move_to(8, 4)
+     queen.move_to(6, 4)
      assert_equal game.moves.count, 2
    end
 

@@ -25,7 +25,7 @@ class GamesController < ApplicationController
       @game.assign_pieces
       redirect_to game_path(@game)
     end
-    @game.next_turn
+    @game
   end
 
   private
