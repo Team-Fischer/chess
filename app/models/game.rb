@@ -2,6 +2,7 @@ class Game < ActiveRecord::Base
   after_create :populate_board
   after_create :first_move
 
+
   has_many :users
   has_many :pieces, :dependent => :destroy
   delegate :kings, :queens, :bishops, :knights, :rooks, :pawns, to: :pieces
@@ -52,7 +53,7 @@ class Game < ActiveRecord::Base
     self.update_attributes(:player_turn => 'white')
   end
 
-  ##TODO Need to fix this.
+  #TODO Need to fix this.
   # def next_turn
   #   if self.moves.to_i == 0 || self.moves.to_i % 2 == 0 
   #     self.update_attributes(:player_turn => 'white')
@@ -63,14 +64,15 @@ class Game < ActiveRecord::Base
 
   ##TODO Throwing infinite loop error
   def moves
-    if Game.update_attributes == 'true'?
-      move_count =+ 1
+    @count = move_count
+    while @board != nil
+      @count += 1 
     end
-    puts move_count
+    return @count 
   end
 
-  def increment_count 
 
+  def increment_count 
   end
 
   def assign_pieces
