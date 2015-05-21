@@ -54,26 +54,22 @@ class Game < ActiveRecord::Base
   end
 
   #TODO Need to fix this.
-  # def next_turn
-  #   if self.moves.to_i == 0 || self.moves.to_i % 2 == 0 
-  #     self.update_attributes(:player_turn => 'white')
-  #   else
-  #     self.update_attributes(:player_turn => 'black')
-  #   end
-  # end
+  def next_turn(color)
+      update_attributes(:player_turn => color)
+  end
 
   ##TODO Throwing infinite loop error
-  def moves
-    @count = move_count
-    while @board != nil
-      @count += 1 
-    end
-    return @count 
-  end
+  # def moves
+  #   @count = move_count
+  #   while @board != nil
+  #     @count += 1 
+  #   end
+  #   return @count 
+  # end
 
 
-  def increment_count 
-  end
+  # def increment_count 
+  # end
 
   def assign_pieces
     pieces.where(:color => 'white').each do |piece|
@@ -83,7 +79,7 @@ class Game < ActiveRecord::Base
       piece.update_attributes(:user_id => black_user_id)
     end
   end
-
+  
   def in_check?(color)
     checking_pieces = []
     king = kings.find_by_color(color)

@@ -166,14 +166,15 @@ class GameTest < ActiveSupport::TestCase
 
     assert game.is_checkmate?('white')
   end
-
-   test 'count turns' do 
-     game = create(:game)
-     queen = game.queens.where(:color => 'black').first
-     queen.move_to(7, 4)
-     assert_equal game.moves, 1
-     queen.move_to(6, 4)
-     assert_equal game.moves, 2
-   end
+  
+# Update to count "Whose turn it is"
+  # test 'count turns' do 
+  #   game = create(:game)
+  #   queen = game.queens.where(:color => 'black').first
+  #   queen.move_to(7, 4)
+  #   assert_equal game.moves, 1
+  #   queen.move_to(6, 4)
+  #   assert_equal game.moves, 2
+  # end
 
 end
