@@ -1,5 +1,6 @@
 class Game < ActiveRecord::Base
   after_create :populate_board
+  after_create :setup_realtime
 
   has_many :users
   has_many :pieces, :dependent => :destroy
@@ -26,6 +27,25 @@ class Game < ActiveRecord::Base
         pawns.create(color: color, x_coord: counter, y_coord: y_pawns)
       end
     end
+  end
+
+  def setup_realtime
+    base_uri = 'https://fischer-chess.firebaseio.com'
+    base_key = 'games'
+    firebase_client = Firebase::Client.new(base_uri)
+
+    # create game data
+    response = firebase_client.push(base_key, { :refresh => "#{Time.now.to_i}"})
+    update(:firebase_key => response.body['name'])
+  end
+
+  def update_realtime
+    base_uri = 'https://fischer-chess.firebaseio.com'
+    base_key = 'games'
+    firebase_client = Firebase::Client.new(base_uri)
+
+    # update game data
+    response = firebase_client.update("#{base_key}/#{firebase_key}", { :refresh => "#{Time.now.to_i}"})
   end
 
   def board_state
