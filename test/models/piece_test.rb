@@ -203,4 +203,15 @@ class PieceTest < ActiveSupport::TestCase
 
   end
 
+  test 'Knight obstructed piece' do
+    knight = @game.knights.first
+    knight.update_attributes(x_coord: 0, y_coord: 1, color: 'black')
+
+    pawn = @game.pawns.first
+    pawn.update_attributes(x_coord: 2, y_coord: 0, color: 'black')
+
+    assert knight.is_obstructed?(2, 0)
+
+  end
+  
 end
