@@ -30,22 +30,26 @@ class Game < ActiveRecord::Base
   end
 
   def setup_realtime
-    base_uri = 'https://fischer-chess.firebaseio.com'
-    base_key = 'games'
-    firebase_client = Firebase::Client.new(base_uri)
+    unless Rails.env == 'test'
+      base_uri = 'https://fischer-chess.firebaseio.com'
+      base_key = 'games'
+      firebase_client = Firebase::Client.new(base_uri)
 
-    # create game data
-    response = firebase_client.push(base_key, { :refresh => "#{Time.now.to_i}"})
-    update(:firebase_key => response.body['name'])
+      # create game data
+      response = firebase_client.push(base_key, { :refresh => "#{Time.now.to_i}"})
+      update(:firebase_key => response.body['name'])
+    end
   end
 
   def update_realtime
-    base_uri = 'https://fischer-chess.firebaseio.com'
-    base_key = 'games'
-    firebase_client = Firebase::Client.new(base_uri)
+    unless Rails.env == 'test'
+      base_uri = 'https://fischer-chess.firebaseio.com'
+      base_key = 'games'
+      firebase_client = Firebase::Client.new(base_uri)
 
-    # update game data
-    response = firebase_client.update("#{base_key}/#{firebase_key}", { :refresh => "#{Time.now.to_i}"})
+      # update game data
+      response = firebase_client.update("#{base_key}/#{firebase_key}", { :refresh => "#{Time.now.to_i}"})
+    end
   end
 
   def board_state
