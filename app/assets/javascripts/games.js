@@ -64,3 +64,15 @@ function drawBoard() {
     }
   );
 }
+
+function initFirebase() {
+  var gameKey = document.getElementById("board").getAttribute("data-firebase");
+  var firebaseUri = "https://fischer-chess.firebaseio.com/games/" + gameKey;
+  var firebaseConn = new Firebase(firebaseUri);
+
+  firebaseConn.on("child_changed", function(snapshot) {
+    drawBoard();
+  }, function(errorObject) {
+    console.log("The read failed: " + errorObject.code);
+  });
+}
