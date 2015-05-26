@@ -53,23 +53,30 @@ class Game < ActiveRecord::Base
     self.update_attributes(:player_turn => 'white')
   end
 
-  #TODO Need to fix this.
   def next_turn(color)
-      update_attributes(:player_turn => color)
+    update_attributes(:player_turn => color)
+    color == 'white' ? 'black' : 'white'
   end
 
-  ##TODO Throwing infinite loop error
-  # def moves
-  #   @count = move_count
-  #   while @board != nil
-  #     @count += 1 
-  #   end
-  #   return @count 
-  # end
+  def player_turn_color
+    if player_turn = 'white' 
+      pieces.where(:color => 'black').move_to(0, 0)
+      return 'white' 
+    elsif player_turn = 'black'
+      pieces.where(:color => 'white').move_to(0, 0)
+      return 'black'
+    end
+  end
 
-
-  # def increment_count 
-  # end
+  def moves 
+    move_count = 1
+    move_count =+ 1 
+    if move_count == odd 
+      update_attributes(:player_turn => 'white') 
+    elsif move_count == even 
+      update_attributes(:player_turn => 'black') 
+    end
+  end
 
   def assign_pieces
     pieces.where(:color => 'white').each do |piece|

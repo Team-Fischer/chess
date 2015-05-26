@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20150519045418) do
     t.datetime "updated_at"
     t.string   "player_turn"
     t.integer  "move_count",    default: 0
+    t.string   "firebase_key"
   end
 
   create_table "pieces", force: true do |t|
