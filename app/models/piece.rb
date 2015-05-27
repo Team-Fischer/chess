@@ -46,63 +46,28 @@ class Piece < ActiveRecord::Base
   end
 
   def obstructed_piece?(x_destination, y_destination)
-    x_dist = (x_coord - x_destination).abs
-    y_dist = (y_coord - y_destination).abs    
-
-    if x_dist == y_dist
-      obstructed_diagonal(x_destination, y_destination)
-    elsif y_dist == 0
-      obstructed_horiz(x_destination, y_destination)
-    else 
-      obstructed_vert(x_destination, y_destination)
-    end
-  end
-
-  def obstructed_diagonal(x_destination, y_destination)
-    if x_coord > x_destination
-      a = (x_destination..x_coord).to_a
+    if type == 'Knight'
+      return false
+    elsif type == 'King'
+      path = [[x_destination, y_destination]]
     else
-      a = (x_coord..x_destination).to_a
+      x_path = x_coord < x_destination ? (x_coord..x_destination).to_a : (x_destination..x_coord).to_a.reverse
+      y_path = y_coord < y_destination ? (y_coord..y_destination).to_a : (y_destination..y_coord).to_a.reverse
+      if x_path.length == y_path.length
+        # diagonal
+        path = x_path.zip(y_path)
+      elsif x_path.length == 0
+        # vertical
+        path = y_path.map { |y| [x_coord, y] }
+      else
+        # horizontal
+        path = x_path.map { |x| [x, y_coord] }
+      end
     end
 
-    if y_coord > y_destination
-      b = (y_destination..y_coord).to_a
-    else
-      b = (y_coord..y_destination).to_a
-    end
-
-    spaces = a.zip(b).to_a
-    spaces.each do |obs|
+    path.each do |obs|
       unless obs[0] == x_coord && obs[1] == y_coord
-          return true if game.piece_at(obs[0], obs[1])
-      end
-    end
-    false
-  end
-
-  def obstructed_horiz(x_destination, y_destination)
-    if x_coord > x_destination
-      a = (x_destination..x_coord).to_a
-    else
-      a = (x_coord..x_destination).to_a
-    end
-    a.each do |obs|
-      unless obs == x_coord && y_coord == y_destination
-        return true if game.piece_at(obs, y_destination)
-      end
-    end
-    false
-  end
-
-  def obstructed_vert(x_destination, y_destination)
-    if y_coord > y_destination
-      b = (y_destination..y_coord).to_a
-    else
-      b = (y_coord..y_destination).to_a
-    end
-    b.each do |obs|
-      unless x_coord == x_destination && obs == y_coord
-        return true if game.piece_at(x_destination, obs)
+        return true if game.piece_at(obs[0], obs[1])
       end
     end
     false
