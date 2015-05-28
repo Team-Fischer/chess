@@ -12,7 +12,10 @@ class PiecesController < ApplicationController
     y_dest = params[:y_coord].to_i
 
     if piece.valid_move?(x_dest, y_dest)
+      piece.capture(x_dest, y_dest)
       piece.move_to(x_dest, y_dest)
+      game.in_check?(piece.opposite)
+      game.is_checkmate?(piece.opposite)
       game.update_realtime
       render :json => :success
     else

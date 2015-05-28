@@ -25,9 +25,6 @@ class Piece < ActiveRecord::Base
 
   def move_to(x, y)
     update_attributes(:x_coord => x, :y_coord => y, :moved => true)
-    capture(x, y)
-    game.in_check?(opposite)
-    game.is_checkmate?(opposite)
   end
   
   def capture(x, y)
