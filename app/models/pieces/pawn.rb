@@ -4,10 +4,10 @@ class Pawn < Piece
     y_dist = (y_dest - y_coord)
     direction = color == 'white' ? -1 : 1
     occupied = game.piece_at(x_dest, y_dest)
-
-
+    
     if x_dist.abs == 1 && y_dist == direction && occupied 
       return x_dist.abs == 1 && y_dist == direction
+
     end
 		# #TODO: Refactor such that valid_move? causes no side effects
 

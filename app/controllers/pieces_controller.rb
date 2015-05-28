@@ -17,6 +17,7 @@ class PiecesController < ApplicationController
       game.in_check?(piece.opposite)
       game.next_turn(piece.opposite)
       game.player_turn
+      game.is_checkmate?(piece.opposite)
       game.update_realtime
       render :json => :success
     else
