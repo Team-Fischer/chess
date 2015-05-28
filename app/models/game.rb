@@ -76,15 +76,26 @@ class Game < ActiveRecord::Base
     self.update_attributes(:player_turn => 'white')
   end
 
+  def stop
+    x_coord.freeze && y_coord.freeze
+  end
+  
   def next_turn(color)
     update_attributes(:player_turn => color)
     color == 'white' ? 'black' : 'white'
   end
 
-  def my_turn
-    if game.next_turn == 'white' 
-      for pieces.where(:color => 'black')
-        x_coord == x_coord && y_coord == y_cordffgg
+  def player_turn
+    if player_turn = 'white' 
+      pieces.where(:color => 'black').each do |piece|
+      piece.freeze
+      end
+    elsif player_turn = 'black'
+      pieces.where(:color => 'white').each do |piece|
+       piece.freeze
+      end
+    end
+  end
 
 
   def assign_pieces
