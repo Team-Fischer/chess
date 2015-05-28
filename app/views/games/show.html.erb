@@ -1,7 +1,8 @@
 <h1 class='text-center'>Have Fun</h1>
 
 <!-- drawing chess board -->
-<table class='chess-board chess-squares' data-game='<%= @game.id %>' id='board'>
+<table class='chess-board chess-squares' data-game='<%= @game.id %>'
+       data-firebase='<%= @game.firebase_key %>' id='board'>
   <% 8.times do |row| %>
     <tr>
       <% 8.times do |column| %>
@@ -18,5 +19,6 @@
 <script>
   $(document).ready(function(){
     drawBoard();
+    initFirebase();
   });
 </script>
