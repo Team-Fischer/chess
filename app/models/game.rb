@@ -88,7 +88,7 @@ class Game < ActiveRecord::Base
   def player_turn
     if player_turn = 'white' 
       pieces.where(:color => 'black').each do |piece|
-      piece.freeze
+      piece.freeze      
       end
     elsif player_turn = 'black'
       pieces.where(:color => 'white').each do |piece|
@@ -96,7 +96,10 @@ class Game < ActiveRecord::Base
       end
     end
   end
+<<<<<<< HEAD
 
+=======
+>>>>>>> 579571efa8ddc85a2323e14a61dc293d3e182edb
 
   def assign_pieces
     pieces.where(:color => 'white').each do |piece|
