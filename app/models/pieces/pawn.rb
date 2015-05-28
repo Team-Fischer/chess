@@ -5,9 +5,8 @@ class Pawn < Piece
     direction = color == 'white' ? -1 : 1
 
     if x_dist.abs == 1 && y_dist == direction && game.piece_at(x_dest, y_dest)
-		#TODO: Refactor such that valid_move? causes no side effects
-    #If there is a piece with opposite color at x_dist.abs == 1 and direction
-    #You can move to that area and capture. 
+
+    #TODO: Refactor such that valid_move? causes no side effects
       Piece.capture(x_dest, y_dest)
       Piece.remove(x_dest, y_dest)
       return true
