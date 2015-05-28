@@ -121,6 +121,7 @@ class PieceTest < ActiveSupport::TestCase
 
   test 'queen move is valid' do
     queen = @game.queens.first
+    queen.move_to(4, 4)
     assert queen.valid_move?((queen.x_coord + 1), (queen.y_coord + 1)), 'queen move diagonal'
     assert queen.valid_move?((queen.x_coord + 3), queen.y_coord), 'queen move horizontal'
     assert queen.valid_move?(queen.x_coord, (queen.y_coord + 2)), 'queen move vertical'
@@ -193,12 +194,15 @@ class PieceTest < ActiveSupport::TestCase
     queen = @game.queens.find_by_color('black')
     queen.update_attributes(x_coord: 3, y_coord: 3)
 
+    #diagonal
     refute queen.obstructed_piece?(5, 5)
-    assert queen.obstructed_piece?(7, 7)
+    assert queen.obstructed_piece?(1, 1)
 
+    #vertical
     refute queen.obstructed_piece?(3, 4)
-    assert queen.obstructed_piece?(0, 6)
+    assert queen.obstructed_piece?(3, 1)
 
+    #horizontal
     refute queen.obstructed_piece?(6, 3)
     queen.update_attributes(x_coord: 3, y_coord: 0)
     assert queen.obstructed_piece?(6, 0)
@@ -211,6 +215,6 @@ class PieceTest < ActiveSupport::TestCase
     pawn = @game.pawns.first
     pawn.update_attributes(x_coord: 2, y_coord: 0, color: 'black')
 
-    assert knight.is_obstructed?(2, 0)
+    assert knight.obstructed_piece?(2, 0)
   end
 end

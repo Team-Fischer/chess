@@ -25,6 +25,9 @@ class Piece < ActiveRecord::Base
 
   def move_to(x, y)
     update_attributes(:x_coord => x, :y_coord => y, :moved => true)
+    capture(x, y)
+    game.in_check?(opposite)
+    game.is_checkmate?(opposite)
   end
   
   def capture(x, y)
@@ -56,7 +59,7 @@ class Piece < ActiveRecord::Base
       if x_path.length == y_path.length
         # diagonal
         path = x_path.zip(y_path)
-      elsif x_path.length == 0
+      elsif x_path.length == 1
         # vertical
         path = y_path.map { |y| [x_coord, y] }
       else
@@ -67,7 +70,7 @@ class Piece < ActiveRecord::Base
 
     path.each do |obs|
       unless obs[0] == x_coord && obs[1] == y_coord
-        return true if game.piece_at(obs[0], obs[1])
+        return true if game.piece_at(obs[0], obs[1]) && game.piece_at(obs[0], obs[1]).color == color
       end
     end
     false

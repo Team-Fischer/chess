@@ -119,12 +119,12 @@ class GameTest < ActiveSupport::TestCase
     black_pawn = game.pawns.where(:color => 'black', :x_coord => 4).first
 
     # position pieces for test
-    white_pawn1.move_to(5, 5)
-    black_pawn.move_to(4, 3)
-    white_pawn2.move_to(6, 4)
-    queen.move_to(7, 4)
+    assert white_pawn1.move_to(5, 5)
+    assert black_pawn.move_to(4, 3)
+    assert white_pawn2.move_to(6, 4)
+    assert queen.move_to(7, 4)
     # destroy this for simpler test, because no obstruction check and pawns not done
-    game.pawns.where(:color => 'white', :x_coord => 7).first.destroy
+    assert game.pawns.where(:color => 'white', :x_coord => 7).first.destroy
     # need list of checking pieces
     check_pieces = game.in_check?('white')
 
