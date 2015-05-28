@@ -1,5 +1,6 @@
 class Game < ActiveRecord::Base
   after_create :populate_board
+  after_create :first_move
   after_create :setup_realtime
 
   has_many :users
@@ -71,6 +72,43 @@ class Game < ActiveRecord::Base
     white_user_id && black_user_id
   end
 
+  def first_move
+    self.update_attributes(:player_turn => 'white')
+  end
+
+  #Trying to use stop method to prevent opposite pieces from moving 
+  def stop
+    x_coord.freeze && y_coord.freeze
+  end
+  
+  def next_turn(color)
+    update_attributes(:player_turn => color)
+    color == 'white' ? 'black' : 'white'
+  end
+
+  def player_turn_color
+    if player_turn = 'white' 
+      puts 'white'
+      pieces.where(:color => 'black').each do |piece|
+      piece.freeze  
+      end
+    elsif player_turn = 'black'
+      puts 'black'
+      pieces.where(:color => 'white').each do |piece|
+       piece.freeze
+      end
+    end
+  end
+
+  def assign_pieces
+    pieces.where(:color => 'white').each do |piece|
+      piece.update_attributes(:user_id => white_user_id)
+    end
+    pieces.where(:color => 'black').each do |piece|
+      piece.update_attributes(:user_id => black_user_id)
+    end
+  end
+  
   def in_check?(color)
     checking_pieces = []
     king = kings.find_by_color(color)
@@ -153,7 +191,6 @@ class Game < ActiveRecord::Base
     unless checking_pieces
       return false
     end
-
     # since king is in check, test methods for getting out of check
     if can_move_from_check?(color)
     # if any valid move for king can get out of check (can't castle)

@@ -1,5 +1,12 @@
 <h1 class='text-center'>Have Fun</h1>
+<br />
 
+ <h2 class='text-center'>
+    <% User.online.each do |user| %>
+      It is <%= current_user.email %> turn! 
+    <% end %>
+ </h2>
+      
 <!-- drawing chess board -->
 <table class='chess-board chess-squares' data-game='<%= @game.id %>'
        data-firebase='<%= @game.firebase_key %>' id='board'>
