@@ -81,23 +81,15 @@ class Game < ActiveRecord::Base
     color == 'white' ? 'black' : 'white'
   end
 
-  def player_turn_color
+  def player_turn
     if player_turn = 'white' 
-      pieces.where(:color => 'black').move_to(0, 0)
-      return 'white' 
+      pieces.where(:color => 'black').each do |piece|
+      
+      end
     elsif player_turn = 'black'
-      pieces.where(:color => 'white').move_to(0, 0)
-      return 'black'
-    end
-  end
-
-  def moves 
-    move_count = 1
-    move_count =+ 1 
-    if move_count == odd 
-      update_attributes(:player_turn => 'white') 
-    elsif move_count == even 
-      update_attributes(:player_turn => 'black') 
+      pieces.where(:color => 'white').each do |piece|
+       piece.freeze
+      end
     end
   end
 
