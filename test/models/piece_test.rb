@@ -150,8 +150,6 @@ class PieceTest < ActiveSupport::TestCase
     black_pawn = @game.pawns.where(:color => 'black', :x_coord => 2, :y_coord => 2).first 
     white_pawn = @game.pawns.where(:color => 'white', :x_coord => 3, :y_coord => 3).first 
     ##Need to write test (JL)
-
-    
   end
 
 

@@ -76,6 +76,7 @@ class Game < ActiveRecord::Base
     self.update_attributes(:player_turn => 'white')
   end
 
+  #Trying to use stop method to prevent opposite pieces from moving 
   def stop
     x_coord.freeze && y_coord.freeze
   end
@@ -85,21 +86,19 @@ class Game < ActiveRecord::Base
     color == 'white' ? 'black' : 'white'
   end
 
-  def player_turn
+  def player_turn_color
     if player_turn = 'white' 
+      puts 'white'
       pieces.where(:color => 'black').each do |piece|
-      piece.freeze      
+      piece.freeze  
       end
     elsif player_turn = 'black'
+      puts 'black'
       pieces.where(:color => 'white').each do |piece|
        piece.freeze
       end
     end
   end
-<<<<<<< HEAD
-
-=======
->>>>>>> 579571efa8ddc85a2323e14a61dc293d3e182edb
 
   def assign_pieces
     pieces.where(:color => 'white').each do |piece|
