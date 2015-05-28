@@ -6,14 +6,14 @@ class Knight < Piece
     (x_dist == 2 && y_dist == 1) || (x_dist == 1 && y_dist == 2)
   end
 
-  def is_obstructed?(x_destination, y_destination)
-  	obstructed = game.piece_at(x_destination, y_destination)
+  def obstructed_piece?(x_destination, y_destination)
+    obstructed = game.piece_at(x_destination, y_destination)
 
-  	if obstructed
-  		if obstructed.color == self.color
-  			return true
-  		end
-  	end
+    if obstructed
+      if obstructed.color == self.color
+        return true
+      end
+    end
   end
 
 end

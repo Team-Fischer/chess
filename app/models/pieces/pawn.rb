@@ -4,7 +4,7 @@ class Pawn < Piece
     y_dist = (y_dest - y_coord)
     direction = color == 'white' ? -1 : 1
     if x_dist.abs == 1 && y_dist == direction && game.piece_at(x_dest, y_dest)
-		#TODO: Refactor such that valid_move? causes no side effects
+    #TODO: Refactor such that valid_move? causes no side effects
       Piece.capture(x_dest, y_dest)
       return true
     end
