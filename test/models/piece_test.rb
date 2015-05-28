@@ -4,6 +4,7 @@ class PieceTest < ActiveSupport::TestCase
   def setup
     @game = create(:game)
   end
+  
   test 'create king' do
     king = @game.kings.first
     assert king.is_a?(King)
@@ -54,9 +55,10 @@ class PieceTest < ActiveSupport::TestCase
   test 'king move is valid' do
     color = 'black'
     king = @game.kings.find_by_color(color)
+    king.move_to(4, 4)
     # remove pieces that are obstructions
-    @game.pieces.where(:color => color, :x_coord => 5).destroy_all
-    @game.pawns.where(:color => color, :x_coord => 4).destroy_all
+#    @game.pieces.where(:color => color, :x_coord => 5).destroy_all
+#    @game.pawns.where(:color => color, :x_coord => 4).destroy_all
 
     assert king.valid_move?((king.x_coord + 1), king.y_coord), '1 space on X axis'
     assert king.valid_move?(king.x_coord, (king.y_coord + 1)), '1 space on Y axis'
@@ -71,7 +73,7 @@ class PieceTest < ActiveSupport::TestCase
   end
 
   test 'king move is obstructed' do
-    king = @game.kings.first
+    king = @game.kings.find_by_color('black')
     refute king.valid_move?((king.x_coord + 1), king.y_coord), '1 spaces on X axis'
     refute king.valid_move?(king.x_coord, (king.y_coord + 1)), '1 spaces on Y axis'
     refute king.valid_move?((king.x_coord + 1), (king.y_coord + 1)), '1 spaces on X and Y axis'
@@ -143,6 +145,16 @@ class PieceTest < ActiveSupport::TestCase
     refute pawn.valid_move?(pawn.x_coord, (pawn.y_coord + 2))
   end
 
+  test 'pawn move diag' do 
+    black_pawn = @game.pawns.where(:color => 'black', :x_coord => 2, :y_coord => 2).first 
+    white_pawn = @game.pawns.where(:color => 'white', :x_coord => 3, :y_coord => 3).first 
+    ##Need to write test (JL)
+
+    
+  end
+
+
+
   test 'pawn back move is invalid' do
     pawn = @game.pawns.first
     pawn.moved = true
@@ -180,27 +192,35 @@ class PieceTest < ActiveSupport::TestCase
     assert_equal 'king', king.glyph, 'King glyph should be king'
   end
 
-  test 'King moves forward' do
+  test 'king moves forward' do
     king = create(:king, x_coord: 4, y_coord: 0)
     king.move_to(4, 1)
     assert_equal 4, king.x_coord, 'King stays on the same column while moving up a row'
     assert_equal 1, king.y_coord, 'King should be able to move forward up and down'
   end
 
-  test 'Queen obstructed piece' do
-    queen = @game.queens.first
+  test 'queen obstructed piece' do
+    queen = @game.queens.find_by_color('black')
     queen.update_attributes(x_coord: 3, y_coord: 3)
 
-    refute queen.obstructed_piece?(4, 4)
-    assert queen.obstructed_piece?(3, 0)
+    refute queen.obstructed_piece?(5, 5)
+    assert queen.obstructed_piece?(7, 7)
 
     refute queen.obstructed_piece?(3, 4)
     assert queen.obstructed_piece?(0, 6)
 
     refute queen.obstructed_piece?(6, 3)
-    queen.update_attributes(x_coord: 4, y_coord: 0)
+    queen.update_attributes(x_coord: 3, y_coord: 0)
     assert queen.obstructed_piece?(6, 0)
-
   end
 
+  test 'knight obstructed piece' do
+    knight = @game.knights.first
+    knight.update_attributes(x_coord: 0, y_coord: 1, color: 'black')
+
+    pawn = @game.pawns.first
+    pawn.update_attributes(x_coord: 2, y_coord: 0, color: 'black')
+
+    assert knight.is_obstructed?(2, 0)
+  end
 end
