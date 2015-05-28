@@ -200,7 +200,6 @@ class PieceTest < ActiveSupport::TestCase
     refute queen.obstructed_piece?(6, 3)
     queen.update_attributes(x_coord: 4, y_coord: 0)
     assert queen.obstructed_piece?(6, 0)
-
   end
 
 end
