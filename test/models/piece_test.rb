@@ -146,6 +146,16 @@ class PieceTest < ActiveSupport::TestCase
     refute pawn.valid_move?(pawn.x_coord, (pawn.y_coord + 2))
   end
 
+  test 'pawn move diag' do 
+    black_pawn = @game.pawns.where(:color => 'black', :x_coord => 2, :y_coord => 2).first 
+    white_pawn = @game.pawns.where(:color => 'white', :x_coord => 3, :y_coord => 3).first 
+    ##Need to write test (JL)
+
+    
+  end
+
+
+
   test 'pawn back move is invalid' do
     pawn = @game.pawns.first
     pawn.moved = true

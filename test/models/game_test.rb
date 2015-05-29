@@ -34,6 +34,12 @@ class GameTest < ActiveSupport::TestCase
     refute game.piece_at(4,4)
   end
 
+  test 'White set for starting move' do
+    game = create(:game)
+    start = game.player_turn
+    assert_equal 'white', start
+  end
+
   test 'should not be in check' do
     game = create(:game)
 
@@ -52,7 +58,6 @@ class GameTest < ActiveSupport::TestCase
     black_pawn.move_to(4, 3)
     white_pawn2.move_to(6, 4)
     queen.move_to(7, 4)
-
     assert game.in_check?('white')
   end
 
@@ -161,4 +166,15 @@ class GameTest < ActiveSupport::TestCase
 
     assert game.is_checkmate?('white')
   end
+
+  test 'next turn player' do 
+    game = create(:game)
+    queen = game.queens.where(:color => 'black').first.move_to(7, 4)
+    next_player = game.next_turn('white')
+
+    assert 'black'
+  end
+  
+#Determining turn: If white player plays, then it's black player's turn. 
+
 end
