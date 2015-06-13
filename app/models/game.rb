@@ -81,22 +81,6 @@ class Game < ActiveRecord::Base
     color == 'white' ? 'black' : 'white'
   end
 
-  # def stop 
-  #   x_coord.freeze && y_coord.freeze
-  # end
-
-  def player_turns
-    if player_turn = 'white' 
-      pieces.where(:color => 'black').each do |piece|
-      piece.freeze
-      end
-    elsif player_turn = 'black'
-      pieces.where(:color => 'white').each do |piece|
-       piece.freeze
-      end
-    end
-  end
-
   def assign_pieces
     pieces.where(:color => 'white').each do |piece|
       piece.update_attributes(:user_id => white_user_id)
