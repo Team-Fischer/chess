@@ -21,9 +21,8 @@ ActiveRecord::Schema.define(version: 20150521052854) do
     t.integer  "black_user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "player_turn"
-    t.integer  "move_count",    default: 0
     t.string   "firebase_key"
+    t.string   "player_turn"
   end
 
   create_table "pieces", force: true do |t|
@@ -35,8 +34,8 @@ ActiveRecord::Schema.define(version: 20150521052854) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "moved",      default: false
-    t.integer  "user_id"
     t.boolean  "captured",   default: false
+    t.integer  "user_id"
   end
 
   create_table "users", force: true do |t|
